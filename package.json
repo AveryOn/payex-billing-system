@@ -1,0 +1,29 @@
+{
+  "name": "nodex-runtime-engine",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "format:md": "prettier --write \"**/*.md\"",
+    "check:md": "prettier --check \"**/*.md\"",
+    "tasks:sync": "node scripts/sync-tasks.mjs",
+    "tasks:complete": "node scripts/complete-task.mjs",
+    "execute": "node scripts/execute-task.mjs",
+    "format": "prettier --write \"**/*.md\""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AveryOn/nodex-runtime-engine.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/AveryOn/nodex-runtime-engine/issues"
+  },
+  "homepage": "https://github.com/AveryOn/nodex-runtime-engine#readme",
+  "devDependencies": {
+    "prettier": "^3.8.4"
+  }
+}
