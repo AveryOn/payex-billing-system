@@ -1,3 +1,4 @@
-# Engineering Lab Template
+# Payex Billing System
 
-#### Template repository for engineering laboratories. Provides a structured workflow for managing tasks, experiments, research, implementations, roadmaps, and qualification progress across technical domains.
+
+#### A billing and payments backend system covering products, plans, subscriptions, invoices, payments, webhook processing, provider abstraction, Stripe/Paddle-like adapters, idempotency, transaction logs, payment state machines, and billing domain modeling.
