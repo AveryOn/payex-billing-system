@@ -3,2257 +3,2260 @@
 
 #### A billing and payments backend system covering products, plans, subscriptions, invoices, paym# Payex Billing System Roadmap
 
-## 1. Основы billing и payment systems
+## 1. Billing and payment systems fundamentals
 
-### 001. Исследовать структуру billing system
+### 001. Research the structure of a billing system
 
-Разобрать роли product catalog, pricing, subscriptions, invoicing, payments, ledger, taxes, entitlements и provider integrations.
+Analyze the roles of the product catalog, pricing, subscriptions, invoicing, payments, ledger, taxes, entitlements, and provider integrations.
 
-### 002. Разделить billing и payment processing
+### 002. Separate billing and payment processing
 
-Определить границу между расчётом обязательств клиента и фактическим перемещением денежных средств.
+Define the boundary between calculating customer obligations and the actual movement of funds.
 
-### 003. Разделить billing domain и accounting domain
+### 003. Separate the billing domain and accounting domain
 
-Определить различия между invoice, payment, transaction log, ledger entry и бухгалтерской проводкой.
+Define the differences between an invoice, payment, transaction log, ledger entry, and accounting entry.
 
-### 004. Исследовать payment lifecycle
+### 004. Research the payment lifecycle
 
-Разобрать authorization, capture, settlement, refund, reversal, dispute и chargeback.
+Analyze authorization, capture, settlement, refund, reversal, dispute, and chargeback.
 
-### 005. Исследовать subscription lifecycle
+### 005. Research the subscription lifecycle
 
-Разобрать создание, trial, activation, renewal, pause, cancellation, expiration и reactivation.
+Analyze creation, trial, activation, renewal, pause, cancellation, expiration, and reactivation.
 
-### 006. Исследовать invoice lifecycle
+### 006. Research the invoice lifecycle
 
-Разобрать draft, open, finalized, paid, void, uncollectible и refunded состояния.
+Analyze draft, open, finalized, paid, void, uncollectible, and refunded states.
 
-### 007. Исследовать payment provider models
+### 007. Research payment provider models
 
-Сравнить payment processor, payment gateway, acquirer, merchant account и Merchant of Record.
+Compare a payment processor, payment gateway, acquirer, merchant account, and Merchant of Record.
 
-### 008. Сравнить Stripe-like и Paddle-like модели
+### 008. Compare Stripe-like and Paddle-like models
 
-Зафиксировать различия между прямым payment processor и Merchant of Record по налогам, invoices, refunds и compliance.
+Record the differences between a direct payment processor and a Merchant of Record regarding taxes, invoices, refunds, and compliance.
 
-### 009. Исследовать one-time и recurring payments
+### 009. Research one-time and recurring payments
 
-Определить общие и различающиеся процессы для разовых покупок и подписок.
+Define the common and differing processes for one-time purchases and subscriptions.
 
-### 010. Исследовать synchronous и asynchronous payment flows
+### 010. Research synchronous and asynchronous payment flows
 
-Разобрать роли API-запросов, redirects, callbacks, webhooks и background reconciliation.
+Analyze the roles of API requests, redirects, callbacks, webhooks, and background reconciliation.
 
-### 011. Исследовать strong и eventual consistency в billing
+### 011. Research strong and eventual consistency in billing
 
-Определить, какие данные должны изменяться атомарно, а какие могут синхронизироваться асинхронно.
+Define which data must change atomically and which can be synchronized asynchronously.
 
-### 012. Исследовать idempotency в payments
+### 012. Research idempotency in payments
 
-Разобрать защиту от повторного создания charges, invoices, refunds и subscriptions.
+Analyze protection against duplicate creation of charges, invoices, refunds, and subscriptions.
 
-### 013. Исследовать immutable financial records
+### 013. Research immutable financial records
 
-Определить, какие записи нельзя изменять после создания и какие корректировки должны оформляться отдельными операциями.
+Define which records cannot be changed after creation and which corrections must be represented as separate operations.
 
-### 014. Зафиксировать billing invariants
+### 014. Record billing invariants
 
-Документировать обязательные правила согласованности products, prices, subscriptions, invoices, payments и ledger.
+Document mandatory consistency rules for products, prices, subscriptions, invoices, payments, and the ledger.
 
-## 2. Структура репозитория и инфраструктура
+## 2. Repository structure and infrastructure
 
-### 015. Создать monorepo
+### 015. Create a monorepo
 
-Настроить workspace для Billing API, Webhook Processor, Background Worker, Provider Simulator и shared libraries.
+Configure a workspace for the Billing API, Webhook Processor, Background Worker, Provider Simulator, and shared libraries.
 
-### 016. Создать NestJS applications
+### 016. Create NestJS applications
 
-Выделить отдельные приложения для HTTP API, webhook ingestion и background processing.
+Separate applications for the HTTP API, webhook ingestion, and background processing.
 
-### 017. Определить shared libraries
+### 017. Define shared libraries
 
-Создать библиотеки domain, application, contracts, database, providers, observability и testing.
+Create domain, application, contracts, database, providers, observability, and testing libraries.
 
-### 018. Настроить TypeScript
+### 018. Configure TypeScript
 
-Включить strict mode, project references, path aliases и раздельные tsconfig для приложений и библиотек.
+Enable strict mode, project references, path aliases, and separate tsconfig files for applications and libraries.
 
-### 019. Настроить ESLint и Prettier
+### 019. Configure ESLint and Prettier
 
-Добавить правила для Promise handling, unsafe types, floating promises и архитектурных импортов.
+Add rules for Promise handling, unsafe types, floating promises, and architectural imports.
 
-### 020. Настроить environment validation
+### 020. Configure environment validation
 
-Проверять PostgreSQL, Redis, provider credentials, webhook secrets и operational limits через Zod или Joi.
+Validate PostgreSQL, Redis, provider credentials, webhook secrets, and operational limits through Zod or Joi.
 
-### 021. Создать Docker Compose окружение
+### 021. Create a Docker Compose environment
 
-Добавить PostgreSQL, Redis, RabbitMQ, Mailpit и provider simulator.
+Add PostgreSQL, Redis, RabbitMQ, Mailpit, and a provider simulator.
 
-### 022. Настроить PostgreSQL migrations
+### 022. Configure PostgreSQL migrations
 
-Создать migration workflow с up, down, status и production-safe execution.
+Create a migration workflow with up, down, status, and production-safe execution.
 
-### 023. Создать development seeds
+### 023. Create development seeds
 
-Подготовить products, prices, customers, subscriptions и provider test accounts.
+Prepare products, prices, customers, subscriptions, and provider test accounts.
 
-### 024. Реализовать application bootstrap
+### 024. Implement application bootstrap
 
-Настроить global validation, exception filters, logging, tracing и graceful shutdown.
+Configure global validation, exception filters, logging, tracing, and graceful shutdown.
 
-### 025. Добавить liveness endpoint
+### 025. Add a liveness endpoint
 
-Проверять работоспособность процесса без зависимости от внешних providers.
+Check process health without depending on external providers.
 
-### 026. Добавить readiness endpoint
+### 026. Add a readiness endpoint
 
-Проверять PostgreSQL, Redis, broker и обязательные internal components.
+Check PostgreSQL, Redis, the broker, and mandatory internal components.
 
-### 027. Настроить graceful shutdown
+### 027. Configure graceful shutdown
 
-Корректно завершать HTTP-запросы, webhook processing, jobs и database transactions.
+Correctly finish HTTP requests, webhook processing, jobs, and database transactions.
 
-### 028. Создать CLI infrastructure
+### 028. Create CLI infrastructure
 
-Добавить команды migrations, seeds, reconciliation, invoice generation и provider synchronization.
+Add commands for migrations, seeds, reconciliation, invoice generation, and provider synchronization.
 
-### 029. Настроить test environments
+### 029. Configure test environments
 
-Разделить unit, integration, contract и end-to-end конфигурации.
+Separate unit, integration, contract, and end-to-end configurations.
 
-### 030. Создать configuration matrix
+### 030. Create a configuration matrix
 
-Документировать различия development, test, staging и production environments.
+Document the differences between development, test, staging, and production environments.
 
-## 3. Архитектура и domain boundaries
+## 3. Architecture and domain boundaries
 
-### 031. Определить bounded contexts
+### 031. Define bounded contexts
 
-Разделить Catalog, Pricing, Customers, Subscriptions, Invoicing, Payments, Ledger и Providers.
+Separate Catalog, Pricing, Customers, Subscriptions, Invoicing, Payments, Ledger, and Providers.
 
-### 032. Спроектировать Hexagonal Architecture
+### 032. Design Hexagonal Architecture
 
-Разделить domain, application, ports, adapters, HTTP и persistence layers.
+Separate domain, application, ports, adapters, HTTP, and persistence layers.
 
-### 033. Определить aggregate boundaries
+### 033. Define aggregate boundaries
 
-Выделить Product, Price, BillingAccount, Subscription, Invoice, Payment и Refund aggregates.
+Identify Product, Price, BillingAccount, Subscription, Invoice, Payment, and Refund aggregates.
 
-### 034. Определить ownership данных
+### 034. Define data ownership
 
-Назначить source of truth для каждого billing entity и provider reference.
+Assign the source of truth for each billing entity and provider reference.
 
-### 035. Создать domain events
+### 035. Create domain events
 
-Определить ProductCreated, SubscriptionActivated, InvoiceFinalized, PaymentSucceeded и другие события.
+Define ProductCreated, SubscriptionActivated, InvoiceFinalized, PaymentSucceeded, and other events.
 
-### 036. Отделить domain events от integration events
+### 036. Separate domain events from integration events
 
-Не публиковать внутренние domain objects напрямую во внешние transports.
+Do not publish internal domain objects directly to external transports.
 
-### 037. Создать command handlers
+### 037. Create command handlers
 
-Реализовать application commands для создания, изменения и завершения billing operations.
+Implement application commands for creating, changing, and completing billing operations.
 
-### 038. Создать query handlers
+### 038. Create query handlers
 
-Разделить read operations и mutation workflows.
+Separate read operations and mutation workflows.
 
-### 039. Определить repository ports
+### 039. Define repository ports
 
-Изолировать application layer от ORM и PostgreSQL implementation.
+Isolate the application layer from the ORM and PostgreSQL implementation.
 
-### 040. Определить provider ports
+### 040. Define provider ports
 
-Создать интерфейсы CustomerProvider, SubscriptionProvider, PaymentProvider, RefundProvider и WebhookProvider.
+Create CustomerProvider, SubscriptionProvider, PaymentProvider, RefundProvider, and WebhookProvider interfaces.
 
-### 041. Определить transaction port
+### 041. Define a transaction port
 
-Позволить application services выполнять локальные транзакции без зависимости от ORM.
+Allow application services to execute local transactions without depending on the ORM.
 
-### 042. Определить event publisher port
+### 042. Define an event publisher port
 
-Публиковать billing events через abstraction, поддерживающую outbox.
+Publish billing events through an abstraction that supports the outbox pattern.
 
-### 043. Ввести explicit DI tokens
+### 043. Introduce explicit DI tokens
 
-Исключить зависимость runtime injection от TypeScript type metadata.
+Eliminate runtime injection dependency on TypeScript type metadata.
 
-### 044. Запретить infrastructure imports в domain
+### 044. Prohibit infrastructure imports in the domain
 
-Добавить architecture tests для контроля направлений зависимостей.
+Add architecture tests to control dependency directions.
 
-### 045. Создать module dependency map
+### 045. Create a module dependency map
 
-Документировать зависимости между Billing modules и запретить циклы.
+Document dependencies between Billing modules and prohibit cycles.
 
-### 046. Определить public application API
+### 046. Define the public application API
 
-Зафиксировать команды и queries, доступные HTTP controllers, workers и webhook handlers.
+Record commands and queries available to HTTP controllers, workers, and webhook handlers.
 
-### 047. Реализовать centralized error model
+### 047. Implement a centralized error model
 
-Создать BillingError с code, category, retryability, metadata и safe public message.
+Create BillingError with code, category, retryability, metadata, and a safe public message.
 
-### 048. Документировать domain invariants
+### 048. Document domain invariants
 
-Зафиксировать правила, которые должны соблюдаться внутри каждого aggregate.
+Record the rules that must be maintained inside each aggregate.
 
-## 4. Money, currency и время
+## 4. Money, currency, and time
 
-### 049. Создать Money value object
+### 049. Create a Money value object
 
-Хранить amount в minor units и currency как ISO 4217 code.
+Store amount in minor units and currency as an ISO 4217 code.
 
-### 050. Запретить floating-point для денег
+### 050. Prohibit floating-point numbers for money
 
-Использовать integer или decimal representation для всех финансовых расчётов.
+Use integer or decimal representation for all financial calculations.
 
-### 051. Реализовать currency exponent
+### 051. Implement currency exponent
 
-Поддержать валюты с 0, 2 и 3 decimal places.
+Support currencies with 0, 2, and 3 decimal places.
 
-### 052. Реализовать Money arithmetic
+### 052. Implement Money arithmetic
 
-Добавить безопасные add, subtract, multiply, allocate и compare operations.
+Add safe add, subtract, multiply, allocate, and compare operations.
 
-### 053. Запретить операции между разными валютами
+### 053. Prohibit operations between different currencies
 
-Возвращать domain error при попытке сложить или сравнить несовместимые Money values.
+Return a domain error when attempting to add or compare incompatible Money values.
 
-### 054. Реализовать rounding rules
+### 054. Implement rounding rules
 
-Поддержать half-up, half-even, floor и provider-specific rounding.
+Support half-up, half-even, floor, and provider-specific rounding.
 
-### 055. Реализовать proportional allocation
+### 055. Implement proportional allocation
 
-Распределять скидки, налоги и credits между invoice lines без потери minor units.
+Distribute discounts, taxes, and credits between invoice lines without losing minor units.
 
-### 056. Создать Percentage value object
+### 056. Create a Percentage value object
 
-Валидировать процентные ставки и исключить некорректные диапазоны.
+Validate percentage rates and exclude invalid ranges.
 
-### 057. Создать TaxRate value object
+### 057. Create a TaxRate value object
 
-Хранить rate, jurisdiction, inclusive mode и category.
+Store rate, jurisdiction, inclusive mode, and category.
 
-### 058. Создать BillingPeriod value object
+### 058. Create a BillingPeriod value object
 
-Поддержать day, week, month, quarter и year intervals.
+Support day, week, month, quarter, and year intervals.
 
-### 059. Реализовать calendar-based periods
+### 059. Implement calendar-based periods
 
-Корректно рассчитывать периоды с разной длиной месяцев.
+Correctly calculate periods with different month lengths.
 
-### 060. Реализовать anchor-based periods
+### 060. Implement anchor-based periods
 
-Поддержать billing anchor для подписок, созданных не в первый день месяца.
+Support a billing anchor for subscriptions created outside the first day of the month.
 
-### 061. Обработать конец месяца
+### 061. Handle the end of the month
 
-Определить поведение подписок с anchor 29, 30 или 31 числа.
+Define the behavior of subscriptions with an anchor on the 29th, 30th, or 31st day.
 
-### 062. Обработать leap year
+### 062. Handle leap years
 
-Проверить годовые и месячные периоды вокруг 29 февраля.
+Check annual and monthly periods around February 29.
 
-### 063. Использовать UTC для persistence
+### 063. Use UTC for persistence
 
-Хранить все timestamps в UTC и преобразовывать только на presentation layer.
+Store all timestamps in UTC and convert them only at the presentation layer.
 
-### 064. Создать ClockPort
+### 064. Create ClockPort
 
-Обеспечить детерминированное тестирование renewals, trials и overdue periods.
+Provide deterministic testing of renewals, trials, and overdue periods.
 
-## 5. Products, prices и plans
+## 5. Products, prices, and plans
 
-### 065. Спроектировать Product entity
+### 065. Design the Product entity
 
-Добавить name, description, status, type, metadata и provider references.
+Add name, description, status, type, metadata, and provider references.
 
-### 066. Поддержать product types
+### 066. Support product types
 
-Реализовать digital, physical, service и subscription product categories.
+Implement digital, physical, service, and subscription product categories.
 
-### 067. Реализовать Product status machine
+### 067. Implement the Product state machine
 
-Поддержать draft, active, archived и retired состояния.
+Support draft, active, archived, and retired states.
 
-### 068. Запретить удаление используемого Product
+### 068. Prohibit deletion of a used Product
 
-Архивировать продукт вместо физического удаления при наличии subscriptions или invoices.
+Archive the product instead of physically deleting it when subscriptions or invoices exist.
 
-### 069. Спроектировать Price entity
+### 069. Design the Price entity
 
-Добавить currency, amount, billing model, interval, tax behavior и status.
+Add currency, amount, billing model, interval, tax behavior, and status.
 
-### 070. Разделить Product и Price
+### 070. Separate Product and Price
 
-Позволить одному Product иметь несколько цен, валют и billing models.
+Allow one Product to have multiple prices, currencies, and billing models.
 
-### 071. Поддержать one-time prices
+### 071. Support one-time prices
 
-Реализовать цены для разовых покупок.
+Implement prices for one-time purchases.
 
-### 072. Поддержать recurring prices
+### 072. Support recurring prices
 
-Реализовать period, intervalCount и billing anchor behavior.
+Implement period, intervalCount, and billing anchor behavior.
 
-### 073. Поддержать flat pricing
+### 073. Support flat pricing
 
-Списывать фиксированную сумму за billing period.
+Charge a fixed amount per billing period.
 
-### 074. Поддержать per-unit pricing
+### 074. Support per-unit pricing
 
-Рассчитывать стоимость как unit amount, умноженный на quantity.
+Calculate the cost as the unit amount multiplied by quantity.
 
-### 075. Поддержать tiered volume pricing
+### 075. Support tiered volume pricing
 
-Применять одну ставку ко всему объёму на основании достигнутого tier.
+Apply one rate to the entire volume based on the reached tier.
 
-### 076. Поддержать graduated pricing
+### 076. Support graduated pricing
 
-Рассчитывать стоимость отдельно для каждого пройденного tier.
+Calculate the cost separately for each passed tier.
 
-### 077. Поддержать package pricing
+### 077. Support package pricing
 
-Тарифицировать использование фиксированными пакетами единиц.
+Bill usage in fixed packages of units.
 
-### 078. Поддержать minimum charge
+### 078. Support a minimum charge
 
-Применять минимальную сумму invoice line независимо от usage.
+Apply a minimum invoice line amount regardless of usage.
 
-### 079. Поддержать maximum charge
+### 079. Support a maximum charge
 
-Ограничивать итоговую стоимость usage-based line.
+Limit the final cost of a usage-based line.
 
-### 080. Поддержать setup fee
+### 080. Support a setup fee
 
-Добавлять одноразовый charge при первой активации subscription.
+Add a one-time charge on the first subscription activation.
 
-### 081. Реализовать Price versioning
+### 081. Implement Price versioning
 
-Запрещать изменение финансовых параметров используемой цены и создавать новую версию.
+Prohibit changing the financial parameters of a used price and create a new version.
 
-### 082. Реализовать effective date pricing
+### 082. Implement effective date pricing
 
-Поддержать activationAt и deactivationAt для цен.
+Support activationAt and deactivationAt for prices.
 
-### 083. Поддержать multi-currency prices
+### 083. Support multi-currency prices
 
-Создавать отдельные Price records для каждой валюты.
+Create separate Price records for each currency.
 
-### 084. Реализовать Product catalog API
+### 084. Implement the Product catalog API
 
-Добавить create, update, archive, list и retrieve operations.
+Add create, update, archive, list, and retrieve operations.
 
-## 6. Pricing policies и plan composition
+## 6. Pricing policies and plan composition
 
-### 085. Спроектировать Plan entity
+### 085. Design the Plan entity
 
-Объединить набор recurring и one-time prices в коммерческое предложение.
+Combine a set of recurring and one-time prices into a commercial offer.
 
-### 086. Поддержать multi-component plans
+### 086. Support multi-component plans
 
-Добавлять base fee, seat fee, usage fee и addon prices в один plan.
+Add a base fee, seat fee, usage fee, and addon prices to one plan.
 
-### 087. Создать PlanItem entity
+### 087. Create the PlanItem entity
 
-Хранить priceId, quantity rules, optionality и display order.
+Store priceId, quantity rules, optionality, and display order.
 
-### 088. Реализовать plan versioning
+### 088. Implement plan versioning
 
-Создавать immutable versions при изменении состава или pricing.
+Create immutable versions when the composition or pricing changes.
 
-### 089. Поддержать grandfathered pricing
+### 089. Support grandfathered pricing
 
-Сохранять старую цену для уже существующих subscriptions.
+Preserve the old price for existing subscriptions.
 
-### 090. Реализовать default plan
+### 090. Implement a default plan
 
-Назначать основной plan для checkout и public catalog.
+Assign the primary plan for checkout and the public catalog.
 
-### 091. Поддержать private plans
+### 091. Support private plans
 
-Ограничивать создание subscriptions на закрытые коммерческие предложения.
+Restrict subscription creation to closed commercial offers.
 
-### 092. Поддержать custom enterprise pricing
+### 092. Support custom enterprise pricing
 
-Создавать customer-specific prices и contract terms.
+Create customer-specific prices and contract terms.
 
-### 093. Поддержать addons
+### 093. Support addons
 
-Разрешать подключение дополнительных recurring components.
+Allow additional recurring components to be connected.
 
-### 094. Поддержать quantity constraints
+### 094. Support quantity constraints
 
-Определять minimum, maximum и increment для количества единиц.
+Define minimum, maximum, and increment for the number of units.
 
-### 095. Реализовать seat-based pricing
+### 095. Implement seat-based pricing
 
-Рассчитывать subscription item по числу активных seats.
+Calculate the subscription item based on the number of active seats.
 
-### 096. Реализовать licensed pricing
+### 096. Implement licensed pricing
 
-Списывать фиксированную сумму за заранее заданное количество licenses.
+Charge a fixed amount for a predefined number of licenses.
 
-### 097. Реализовать metered pricing
+### 097. Implement metered pricing
 
-Создавать subscription items, стоимость которых определяется usage records.
+Create subscription items whose cost is determined by usage records.
 
-### 098. Создать pricing calculator
+### 098. Create a pricing calculator
 
-Рассчитывать estimated recurring amount до создания subscription.
+Calculate the estimated recurring amount before creating a subscription.
 
-### 099. Добавить pricing preview API
+### 099. Add a pricing preview API
 
-Возвращать subtotal, discounts, taxes, credits и total без сохранения invoice.
+Return subtotal, discounts, taxes, credits, and total without saving an invoice.
 
-### 100. Тестировать pricing calculations
+### 100. Test pricing calculations
 
-Проверить tiers, packages, quantities, minimum charge и rounding.
+Check tiers, packages, quantities, minimum charge, and rounding.
 
-## 7. Customers и billing accounts
+## 7. Customers and billing accounts
 
-### 101. Спроектировать Customer entity
+### 101. Design the Customer entity
 
-Хранить customer type, display name, email, status и provider mappings.
+Store customer type, display name, email, status, and provider mappings.
 
-### 102. Разделить application user и billing customer
+### 102. Separate the application user and billing customer
 
-Не связывать authentication identity напрямую с provider customer object.
+Do not directly link the authentication identity to the provider customer object.
 
-### 103. Спроектировать BillingAccount
+### 103. Design BillingAccount
 
-Выделить юридические и финансовые данные плательщика.
+Separate the legal and financial data of the payer.
 
-### 104. Поддержать individual и business customers
+### 104. Support individual and business customers
 
-Добавить разные требования к имени, компании, tax identifiers и billing address.
+Add different requirements for name, company, tax identifiers, and billing address.
 
-### 105. Реализовать billing address
+### 105. Implement the billing address
 
-Хранить country, region, city, postalCode и address lines.
+Store country, region, city, postalCode, and address lines.
 
-### 106. Реализовать shipping address
+### 106. Implement the shipping address
 
-Отделить адрес доставки от billing address.
+Separate the shipping address from the billing address.
 
-### 107. Реализовать tax identifiers
+### 107. Implement tax identifiers
 
-Поддержать VAT ID, GST ID и другие региональные identifiers.
+Support VAT ID, GST ID, and other regional identifiers.
 
-### 108. Реализовать customer status machine
+### 108. Implement the customer state machine
 
-Поддержать active, restricted, delinquent и archived состояния.
+Support active, restricted, delinquent, and archived states.
 
-### 109. Поддержать несколько billing accounts
+### 109. Support multiple billing accounts
 
-Разрешить одной organization иметь отдельные accounts по регионам или юридическим лицам.
+Allow one organization to have separate accounts by region or legal entity.
 
-### 110. Поддержать preferred currency
+### 110. Support a preferred currency
 
-Использовать currency account при выборе цены и создании invoices.
+Use the account currency when selecting a price and creating invoices.
 
-### 111. Поддержать locale и timezone
+### 111. Support locale and timezone
 
-Использовать настройки customer для invoice display и billing notifications.
+Use customer settings for invoice display and billing notifications.
 
-### 112. Реализовать provider customer mapping
+### 112. Implement provider customer mapping
 
-Хранить связь internalCustomerId, provider и providerCustomerId.
+Store the relationship between internalCustomerId, provider, and providerCustomerId.
 
-### 113. Реализовать customer synchronization
+### 113. Implement customer synchronization
 
-Обновлять provider customer при изменении разрешённых billing fields.
+Update the provider customer when permitted billing fields change.
 
-### 114. Реализовать Customer API
+### 114. Implement the Customer API
 
-Добавить create, update, retrieve, archive и provider sync operations.
+Add create, update, retrieve, archive, and provider sync operations.
 
-### 115. Добавить customer merge policy
+### 115. Add a customer merge policy
 
-Определить безопасное объединение дублирующихся customers и provider references.
+Define safe merging of duplicate customers and provider references.
 
-### 116. Защитить customer isolation
+### 116. Protect customer isolation
 
-Проверять tenant и organization scope для всех billing operations.
+Check tenant and organization scope for all billing operations.
 
 ## 8. Subscription lifecycle
 
-### 117. Спроектировать Subscription aggregate
+### 117. Design the Subscription aggregate
 
-Добавить customerId, planVersionId, status, periods, trial и cancellation fields.
+Add customerId, planVersionId, status, periods, trial, and cancellation fields.
 
-### 118. Создать SubscriptionItem entity
+### 118. Create the SubscriptionItem entity
 
-Хранить priceId, quantity, billing model и usage configuration.
+Store priceId, quantity, billing model, and usage configuration.
 
-### 119. Реализовать Subscription state machine
+### 119. Implement the Subscription state machine
 
-Поддержать incomplete, trialing, active, past_due, paused, cancelled и expired.
+Support incomplete, trialing, active, past_due, paused, cancelled, and expired states.
 
-### 120. Реализовать создание subscription
+### 120. Implement subscription creation
 
-Валидировать customer, plan, currency, payment method и start date.
+Validate the customer, plan, currency, payment method, and start date.
 
-### 121. Реализовать immediate activation
+### 121. Implement immediate activation
 
-Активировать subscription после успешной оплаты первого invoice.
+Activate the subscription after successful payment of the first invoice.
 
-### 122. Реализовать future activation
+### 122. Implement future activation
 
-Поддержать subscriptions с запланированной датой начала.
+Support subscriptions with a scheduled start date.
 
-### 123. Реализовать trial period
+### 123. Implement a trial period
 
-Поддержать trialStart, trialEnd и правила завершения trial.
+Support trialStart, trialEnd, and trial completion rules.
 
-### 124. Реализовать trial without payment method
+### 124. Implement a trial without a payment method
 
-Настроить поведение при окончании trial без доступного способа оплаты.
+Configure behavior when the trial ends without an available payment method.
 
-### 125. Реализовать trial conversion
+### 125. Implement trial conversion
 
-Создавать invoice и payment attempt при переходе trialing → active.
+Create an invoice and payment attempt during the trialing → active transition.
 
-### 126. Реализовать subscription renewal
+### 126. Implement subscription renewal
 
-Создавать новый billing period и invoice по окончании текущего периода.
+Create a new billing period and invoice when the current period ends.
 
-### 127. Реализовать billing anchor
+### 127. Implement a billing anchor
 
-Сохранять фиксированную дату renewal для subscription.
+Store a fixed renewal date for the subscription.
 
-### 128. Реализовать cancellation at period end
+### 128. Implement cancellation at period end
 
-Сохранять доступ до окончания оплаченного периода.
+Preserve access until the end of the paid period.
 
-### 129. Реализовать immediate cancellation
+### 129. Implement immediate cancellation
 
-Прекращать subscription немедленно с настраиваемой proration policy.
+Terminate the subscription immediately with a configurable proration policy.
 
-### 130. Реализовать scheduled cancellation
+### 130. Implement scheduled cancellation
 
-Поддержать отмену на произвольную будущую дату.
+Support cancellation on an arbitrary future date.
 
-### 131. Реализовать cancellation reason
+### 131. Implement a cancellation reason
 
-Хранить user reason, system reason и structured category.
+Store user reason, system reason, and structured category.
 
-### 132. Реализовать subscription pause
+### 132. Implement subscription pause
 
-Поддержать pause с сохранением или прекращением billing periods.
+Support pausing with preservation or termination of billing periods.
 
-### 133. Реализовать pause collection
+### 133. Implement pause collection
 
-Останавливать payment attempts без полного прекращения subscription.
+Stop payment attempts without fully terminating the subscription.
 
-### 134. Реализовать subscription resume
+### 134. Implement subscription resume
 
-Восстанавливать paused subscription с корректным period calculation.
+Restore a paused subscription with correct period calculation.
 
-### 135. Реализовать subscription expiration
+### 135. Implement subscription expiration
 
-Завершать subscription после исчерпания заранее оплаченных периодов.
+End the subscription after prepaid periods are exhausted.
 
-### 136. Реализовать reactivation
+### 136. Implement reactivation
 
-Создавать новый period или новую subscription согласно business policy.
+Create a new period or a new subscription according to business policy.
 
-### 137. Реализовать subscription quantity update
+### 137. Implement subscription quantity update
 
-Изменять количество seats или licenses с effective date.
+Change the number of seats or licenses with an effective date.
 
-### 138. Реализовать addon management
+### 138. Implement addon management
 
-Подключать и отключать дополнительные SubscriptionItems.
+Connect and disconnect additional SubscriptionItems.
 
-### 139. Реализовать plan upgrade
+### 139. Implement plan upgrade
 
-Переводить subscription на более дорогой plan с proration.
+Move the subscription to a more expensive plan with proration.
 
-### 140. Реализовать plan downgrade
+### 140. Implement plan downgrade
 
-Поддержать immediate или next-period downgrade.
+Support immediate or next-period downgrade.
 
-### 141. Реализовать scheduled subscription change
+### 141. Implement a scheduled subscription change
 
-Сохранять будущую конфигурацию plan и items.
+Store the future plan and item configuration.
 
-### 142. Реализовать subscription schedules
+### 142. Implement subscription schedules
 
-Поддержать последовательность phases с разными prices и quantities.
+Support a sequence of phases with different prices and quantities.
 
-### 143. Реализовать subscription version history
+### 143. Implement subscription version history
 
-Хранить immutable snapshots конфигурации на каждый период.
+Store immutable configuration snapshots for each period.
 
-### 144. Реализовать subscription API
+### 144. Implement the subscription API
 
-Добавить create, retrieve, list, update, pause, resume и cancel operations.
+Add create, retrieve, list, update, pause, resume, and cancel operations.
 
-### 145. Реализовать renewal scheduler
+### 145. Implement the renewal scheduler
 
-Находить subscriptions, готовые к генерации следующего invoice.
+Find subscriptions ready to generate the next invoice.
 
-### 146. Защитить renewal от duplicate execution
+### 146. Protect renewal from duplicate execution
 
-Использовать period key и database constraint для единственной генерации invoice.
+Use a period key and database constraint for single invoice generation.
 
-### 147. Реализовать subscription domain events
+### 147. Implement subscription domain events
 
-Публиковать события lifecycle только после успешного commit.
+Publish lifecycle events only after a successful commit.
 
-### 148. Проверить subscription invariants
+### 148. Check subscription invariants
 
-Запретить несовместимые status, period и cancellation combinations.
+Prohibit incompatible status, period, and cancellation combinations.
 
 ## 9. Usage-based billing
 
-### 149. Спроектировать Meter entity
+### 149. Design the Meter entity
 
-Определить eventName, aggregation, unit, window и retention policy.
+Define eventName, aggregation, unit, window, and retention policy.
 
-### 150. Поддержать sum aggregation
+### 150. Support sum aggregation
 
-Суммировать значения usage events за billing period.
+Sum usage event values for the billing period.
 
-### 151. Поддержать count aggregation
+### 151. Support count aggregation
 
-Считать количество событий независимо от переданного value.
+Count the number of events regardless of the provided value.
 
-### 152. Поддержать max aggregation
+### 152. Support max aggregation
 
-Использовать максимальное значение за billing period.
+Use the maximum value for the billing period.
 
-### 153. Поддержать last-value aggregation
+### 153. Support last-value aggregation
 
-Использовать последнее известное значение внутри периода.
+Use the last known value within the period.
 
-### 154. Спроектировать UsageEvent
+### 154. Design UsageEvent
 
-Добавить eventId, customerId, subscriptionItemId, timestamp, value и dimensions.
+Add eventId, customerId, subscriptionItemId, timestamp, value, and dimensions.
 
-### 155. Реализовать usage ingestion API
+### 155. Implement a usage ingestion API
 
-Принимать usage events с idempotency key и runtime validation.
+Accept usage events with an idempotency key and runtime validation.
 
-### 156. Реализовать usage deduplication
+### 156. Implement usage deduplication
 
-Исключать повторный учёт события по provider или client eventId.
+Exclude duplicate event accounting by provider or client eventId.
 
-### 157. Проверять usage ownership
+### 157. Check usage ownership
 
-Не позволять отправлять usage для чужого customer или subscription item.
+Do not allow usage to be submitted for another customer or subscription item.
 
-### 158. Обрабатывать late usage
+### 158. Handle late usage
 
-Определить допустимое окно поступления событий после завершения периода.
+Define the permissible event arrival window after the period ends.
 
-### 159. Обрабатывать future usage
+### 159. Handle future usage
 
-Отклонять или карантинировать события с некорректным timestamp.
+Reject or quarantine events with an invalid timestamp.
 
-### 160. Реализовать usage correction
+### 160. Implement usage correction
 
-Исправлять usage через отдельные adjustment events без изменения исходной записи.
+Correct usage through separate adjustment events without changing the original record.
 
-### 161. Реализовать usage aggregation job
+### 161. Implement a usage aggregation job
 
-Собирать usage по subscription item и billing period.
+Aggregate usage by subscription item and billing period.
 
-### 162. Реализовать usage preview
+### 162. Implement usage preview
 
-Показывать текущую оценку будущего invoice.
+Show the current estimate of the future invoice.
 
-### 163. Реализовать usage finalization
+### 163. Implement usage finalization
 
-Закрывать usage window перед созданием invoice.
+Close the usage window before creating the invoice.
 
-### 164. Реализовать high-water mark
+### 164. Implement a high-water mark
 
-Запоминать позицию последнего обработанного usage event.
+Remember the position of the last processed usage event.
 
-### 165. Поддержать usage dimensions
+### 165. Support usage dimensions
 
-Разделять usage по region, feature, model или operation type.
+Separate usage by region, feature, model, or operation type.
 
-### 166. Реализовать usage limits
+### 166. Implement usage limits
 
-Отслеживать soft и hard limits для subscription item.
+Track soft and hard limits for the subscription item.
 
-### 167. Публиковать usage threshold events
+### 167. Publish usage threshold events
 
-Уведомлять при достижении заданного процента лимита.
+Notify when a specified percentage of the limit is reached.
 
-### 168. Тестировать usage billing
+### 168. Test usage billing
 
-Проверить duplicates, late events, aggregation и tiered calculations.
+Check duplicates, late events, aggregation, and tiered calculations.
 
-## 10. Checkout и purchase flows
 
-### 169. Спроектировать CheckoutSession
+## 10. Checkout and purchase flows
 
-Хранить customer, items, currency, expiration, return URLs и provider reference.
+### 169. Design CheckoutSession
 
-### 170. Реализовать hosted checkout flow
+Store customer, items, currency, expiration, return URLs, and provider reference.
 
-Создавать provider session и возвращать redirect URL.
+### 170. Implement a hosted checkout flow
 
-### 171. Реализовать embedded checkout flow
+Create a provider session and return a redirect URL.
 
-Подготавливать client token или provider-specific initialization data.
+### 171. Implement an embedded checkout flow
 
-### 172. Реализовать server-side checkout
+Prepare a client token or provider-specific initialization data.
 
-Создавать invoice и payment intent без provider-hosted страницы.
+### 172. Implement server-side checkout
 
-### 173. Поддержать guest checkout
+Create an invoice and payment intent without a provider-hosted page.
 
-Создавать customer и billing account во время оплаты.
+### 173. Support guest checkout
 
-### 174. Поддержать authenticated checkout
+Create a customer and billing account during payment.
 
-Связывать purchase с существующим customer.
+### 174. Support authenticated checkout
 
-### 175. Валидировать checkout items
+Link the purchase to an existing customer.
 
-Проверять active Product, Price, currency и quantity constraints.
+### 175. Validate checkout items
 
-### 176. Реализовать checkout expiration
+Check active Product, Price, currency, and quantity constraints.
 
-Запрещать завершение устаревшей session.
+### 176. Implement checkout expiration
 
-### 177. Защитить checkout от price substitution
+Prohibit completion of an expired session.
 
-Использовать server-side Price records вместо суммы из client request.
+### 177. Protect checkout from price substitution
 
-### 178. Реализовать checkout preview
+Use server-side Price records instead of the amount from the client request.
 
-Возвращать subtotal, discount, tax и payable total.
+### 178. Implement checkout preview
 
-### 179. Реализовать checkout completion
+Return subtotal, discount, tax, and payable total.
 
-Создавать subscription или order только после подтверждённого provider result.
+### 179. Implement checkout completion
 
-### 180. Обрабатывать abandoned checkout
+Create a subscription or order only after a confirmed provider result.
 
-Фиксировать истёкшие sessions без создания финансовых обязательств.
+### 180. Handle abandoned checkout
 
-### 181. Реализовать success redirect handling
+Record expired sessions without creating financial obligations.
 
-Показывать pending state до получения подтверждающего webhook.
+### 181. Implement success redirect handling
 
-### 182. Реализовать cancel redirect handling
+Show a pending state until a confirming webhook is received.
 
-Не считать redirect доказательством отмены provider operation.
+### 182. Implement cancel redirect handling
 
-### 183. Поддержать one-time checkout
+Do not consider the redirect proof of cancellation of the provider operation.
 
-Создавать invoice и payment для разовой покупки.
+### 183. Support one-time checkout
 
-### 184. Поддержать subscription checkout
+Create an invoice and payment for a one-time purchase.
 
-Создавать subscription и первый invoice.
+### 184. Support subscription checkout
 
-### 185. Реализовать Checkout API
+Create a subscription and the first invoice.
 
-Добавить create, retrieve, expire и preview operations.
+### 185. Implement the Checkout API
 
-### 186. Тестировать checkout security
+Add create, retrieve, expire, and preview operations.
 
-Проверить tampering, replay, expired sessions и cross-tenant access.
+### 186. Test checkout security
 
-## 11. Invoices и invoice lines
+Check tampering, replay, expired sessions, and cross-tenant access.
 
-### 187. Спроектировать Invoice aggregate
+## 11. Invoices and invoice lines
 
-Добавить customer, subscription, currency, status, totals, due dates и provider references.
+### 187. Design the Invoice aggregate
 
-### 188. Спроектировать InvoiceLine
+Add customer, subscription, currency, status, totals, due dates, and provider references.
 
-Хранить type, description, quantity, unit amount, period, tax и discount allocations.
+### 188. Design InvoiceLine
 
-### 189. Реализовать Invoice state machine
+Store type, description, quantity, unit amount, period, tax, and discount allocations.
 
-Поддержать draft, open, paid, void, uncollectible и refunded.
+### 189. Implement the Invoice state machine
 
-### 190. Реализовать draft invoice
+Support draft, open, paid, void, uncollectible, and refunded states.
 
-Позволить добавление и корректировку lines до finalization.
+### 190. Implement a draft invoice
 
-### 191. Реализовать invoice finalization
+Allow lines to be added and corrected before finalization.
 
-Зафиксировать номера, totals, tax, due date и immutable line snapshots.
+### 191. Implement invoice finalization
 
-### 192. Запретить изменение finalized invoice
+Fix numbers, totals, tax, due date, and immutable line snapshots.
 
-Использовать credit note или adjustment invoice вместо mutation.
+### 192. Prohibit changing a finalized invoice
 
-### 193. Реализовать invoice numbering
+Use a credit note or adjustment invoice instead of mutation.
 
-Создавать уникальные последовательные номера с configurable prefix.
+### 193. Implement invoice numbering
 
-### 194. Поддержать numbering scopes
+Create unique sequential numbers with a configurable prefix.
 
-Разделять последовательности по legal entity, region или year.
+### 194. Support numbering scopes
 
-### 195. Защитить numbering от race condition
+Separate sequences by legal entity, region, or year.
 
-Использовать database locking или sequence.
+### 195. Protect numbering from race conditions
 
-### 196. Реализовать recurring invoice generation
+Use database locking or a sequence.
 
-Создавать invoice по завершённому subscription billing period.
+### 196. Implement recurring invoice generation
 
-### 197. Реализовать one-time invoice
+Create an invoice for the completed subscription billing period.
 
-Создавать invoice для разовой покупки или manual charge.
+### 197. Implement a one-time invoice
 
-### 198. Реализовать manual invoice items
+Create an invoice for a one-time purchase or manual charge.
 
-Добавлять дополнительные charges до finalization.
+### 198. Implement manual invoice items
 
-### 199. Реализовать pending invoice items
+Add additional charges before finalization.
 
-Накапливать adjustments для следующего recurring invoice.
+### 199. Implement pending invoice items
 
-### 200. Реализовать subtotal calculation
+Accumulate adjustments for the next recurring invoice.
 
-Суммировать invoice lines до discounts и taxes.
+### 200. Implement subtotal calculation
 
-### 201. Реализовать line-level discounts
+Sum invoice lines before discounts and taxes.
 
-Применять скидки только к выбранным invoice lines.
+### 201. Implement line-level discounts
 
-### 202. Реализовать invoice-level discounts
+Apply discounts only to selected invoice lines.
 
-Распределять общую скидку между eligible lines.
+### 202. Implement invoice-level discounts
 
-### 203. Реализовать inclusive taxes
+Distribute the overall discount among eligible lines.
 
-Выделять налог из уже включённой в цену суммы.
+### 203. Implement inclusive taxes
 
-### 204. Реализовать exclusive taxes
+Extract tax from an amount that already includes it.
 
-Добавлять налог поверх subtotal.
+### 204. Implement exclusive taxes
 
-### 205. Реализовать invoice total calculation
+Add tax on top of the subtotal.
 
-Рассчитывать subtotal, discount, tax, credit, amountDue и amountPaid.
+### 205. Implement invoice total calculation
 
-### 206. Реализовать zero-value invoice
+Calculate subtotal, discount, tax, credit, amountDue, and amountPaid.
 
-Автоматически закрывать invoice без создания payment attempt.
+### 206. Implement a zero-value invoice
 
-### 207. Реализовать invoice due date
+Automatically close the invoice without creating a payment attempt.
 
-Поддержать due immediately и net payment terms.
+### 207. Implement an invoice due date
 
-### 208. Реализовать invoice payment status
+Support due immediately and net payment terms.
 
-Отделить invoice lifecycle от отдельных PaymentAttempt states.
+### 208. Implement invoice payment status
 
-### 209. Реализовать partial payment
+Separate the invoice lifecycle from individual PaymentAttempt states.
 
-Уменьшать amountDue несколькими успешными payments.
+### 209. Implement partial payment
 
-### 210. Реализовать invoice overpayment
+Reduce amountDue with multiple successful payments.
 
-Создавать customer credit или refundable balance.
+### 210. Implement invoice overpayment
 
-### 211. Реализовать invoice void
+Create customer credit or a refundable balance.
 
-Аннулировать финансовое требование без удаления истории.
+### 211. Implement invoice void
 
-### 212. Реализовать uncollectible invoice
+Cancel the financial claim without deleting history.
 
-Фиксировать прекращение автоматических попыток взыскания.
+### 212. Implement an uncollectible invoice
 
-### 213. Реализовать invoice PDF rendering
+Record the termination of automatic collection attempts.
 
-Генерировать стабильный документ из immutable invoice snapshot.
+### 213. Implement invoice PDF rendering
 
-### 214. Реализовать invoice delivery
+Generate a stable document from an immutable invoice snapshot.
 
-Отправлять invoice email и хранить delivery status.
+### 214. Implement invoice delivery
 
-### 215. Реализовать Invoice API
+Send the invoice by email and store delivery status.
 
-Добавить create, preview, finalize, send, pay, void и retrieve operations.
+### 215. Implement the Invoice API
 
-### 216. Тестировать invoice calculations
+Add create, preview, finalize, send, pay, void, and retrieve operations.
 
-Проверить rounding, taxes, discounts, credits, partial payments и zero totals.
+### 216. Test invoice calculations
 
-## 12. Payment processing и state machines
+Check rounding, taxes, discounts, credits, partial payments, and zero totals.
 
-### 217. Спроектировать Payment entity
+## 12. Payment processing and state machines
 
-Хранить amount, currency, customer, invoice, status и provider references.
+### 217. Design the Payment entity
 
-### 218. Спроектировать PaymentAttempt
+Store amount, currency, customer, invoice, status, and provider references.
 
-Отделить business payment от отдельных попыток через provider.
+### 218. Design PaymentAttempt
 
-### 219. Реализовать Payment state machine
+Separate the business payment from individual attempts through the provider.
 
-Поддержать pending, requires_action, authorized, processing, succeeded, failed и cancelled.
+### 219. Implement the Payment state machine
 
-### 220. Реализовать PaymentAttempt state machine
+Support pending, requires_action, authorized, processing, succeeded, failed, and cancelled states.
 
-Поддержать created, submitted, pending, succeeded, failed и expired.
+### 220. Implement the PaymentAttempt state machine
 
-### 221. Реализовать payment creation
+Support created, submitted, pending, succeeded, failed, and expired states.
 
-Создавать Payment только из доверенного server-side amount.
+### 221. Implement payment creation
 
-### 222. Реализовать authorization flow
+Create Payment only from a trusted server-side amount.
 
-Резервировать средства без немедленного capture.
+### 222. Implement an authorization flow
 
-### 223. Реализовать immediate capture
+Reserve funds without immediate capture.
 
-Выполнять authorization и capture в одной provider operation.
+### 223. Implement immediate capture
 
-### 224. Реализовать delayed capture
+Perform authorization and capture in one provider operation.
 
-Подтверждать ранее авторизованный payment отдельной командой.
+### 224. Implement delayed capture
 
-### 225. Реализовать partial capture
+Confirm a previously authorized payment with a separate command.
 
-Списывать часть авторизованной суммы с корректным remaining amount.
+### 225. Implement partial capture
 
-### 226. Реализовать authorization expiration
+Capture part of the authorized amount with a correct remaining amount.
 
-Обрабатывать истечение неподтверждённого authorization.
+### 226. Implement authorization expiration
 
-### 227. Реализовать asynchronous payment methods
+Handle expiration of an unconfirmed authorization.
 
-Поддержать payments, которые остаются pending после завершения API-запроса.
+### 227. Implement asynchronous payment methods
 
-### 228. Реализовать requires_action
+Support payments that remain pending after the API request completes.
 
-Сохранять redirect URL, client secret или challenge data.
+### 228. Implement requires_action
 
-### 229. Реализовать 3DS flow
+Store a redirect URL, client secret, or challenge data.
 
-Обрабатывать дополнительную аутентификацию и последующие webhook events.
+### 229. Implement a 3DS flow
 
-### 230. Реализовать payment confirmation
+Handle additional authentication and subsequent webhook events.
 
-Подтверждать Payment только по trusted provider response или webhook.
+### 230. Implement payment confirmation
 
-### 231. Реализовать payment failure classification
+Confirm Payment only through a trusted provider response or webhook.
 
-Разделить soft decline, hard decline, validation, fraud и infrastructure failures.
+### 231. Implement payment failure classification
 
-### 232. Реализовать payment cancellation
+Separate soft decline, hard decline, validation, fraud, and infrastructure failures.
 
-Отменять неподтверждённые или ожидающие provider operations.
+### 232. Implement payment cancellation
 
-### 233. Реализовать payment expiration
+Cancel unconfirmed or pending provider operations.
 
-Закрывать незавершённые PaymentAttempts по timeout policy.
+### 233. Implement payment expiration
 
-### 234. Реализовать payment method attachment
+Close incomplete PaymentAttempts according to the timeout policy.
 
-Связывать provider payment method с customer.
+### 234. Implement payment method attachment
 
-### 235. Реализовать default payment method
+Link a provider payment method to the customer.
 
-Выбирать основной способ оплаты для automatic collection.
+### 235. Implement a default payment method
 
-### 236. Реализовать payment method removal
+Select the primary payment method for automatic collection.
 
-Запрещать удаление метода, необходимого активной subscription согласно policy.
+### 236. Implement payment method removal
 
-### 237. Реализовать automatic collection
+Prohibit removal of a method required by an active subscription according to policy.
 
-Создавать PaymentAttempt при finalization recurring invoice.
+### 237. Implement automatic collection
 
-### 238. Реализовать manual collection
+Create a PaymentAttempt when a recurring invoice is finalized.
 
-Оставлять invoice open до ручной оплаты.
+### 238. Implement manual collection
 
-### 239. Реализовать partial payment allocation
+Leave the invoice open until manual payment.
 
-Распределять успешный payment по invoice balance.
+### 239. Implement partial payment allocation
 
-### 240. Реализовать Payment API
+Allocate a successful payment to the invoice balance.
 
-Добавить create, confirm, capture, cancel и retrieve operations.
+### 240. Implement the Payment API
 
-### 241. Публиковать payment events
+Add create, confirm, capture, cancel, and retrieve operations.
 
-Создавать PaymentAuthorized, PaymentSucceeded, PaymentFailed и PaymentCancelled.
+### 241. Publish payment events
 
-### 242. Синхронизировать payment и invoice
+Create PaymentAuthorized, PaymentSucceeded, PaymentFailed, and PaymentCancelled.
 
-Обновлять amountPaid и invoice status в одной локальной transaction.
+### 242. Synchronize payment and invoice
 
-### 243. Защитить terminal payment states
+Update amountPaid and invoice status in one local transaction.
 
-Запретить переход из succeeded или cancelled в несовместимые состояния.
+### 243. Protect terminal payment states
 
-### 244. Тестировать payment state machine
+Prohibit transition from succeeded or cancelled to incompatible states.
 
-Проверить все разрешённые transitions, duplicates и out-of-order provider events.
+### 244. Test the payment state machine
+
+Check all permitted transitions, duplicates, and out-of-order provider events.
 
 ## 13. Provider abstraction
 
-### 245. Создать BillingProviderPort
+### 245. Create BillingProviderPort
 
-Определить общий lifecycle для provider customer, checkout, subscription, invoice и payment operations.
+Define a common lifecycle for provider customer, checkout, subscription, invoice, and payment operations.
 
-### 246. Разделить provider capabilities
+### 246. Separate provider capabilities
 
-Не требовать от каждого adapter поддержки всех функций.
+Do not require every adapter to support all functions.
 
-### 247. Создать ProviderCapabilities model
+### 247. Create the ProviderCapabilities model
 
-Описать поддержку tax, hosted checkout, manual capture, refunds, subscriptions и invoices.
+Describe support for tax, hosted checkout, manual capture, refunds, subscriptions, and invoices.
 
-### 248. Создать ProviderCustomerPort
+### 248. Create ProviderCustomerPort
 
-Определить create, update, retrieve и archive operations.
+Define create, update, retrieve, and archive operations.
 
-### 249. Создать ProviderCheckoutPort
+### 249. Create ProviderCheckoutPort
 
-Определить создание и получение checkout session.
+Define creation and retrieval of a checkout session.
 
-### 250. Создать ProviderSubscriptionPort
+### 250. Create ProviderSubscriptionPort
 
-Определить create, update, pause, resume и cancel operations.
+Define create, update, pause, resume, and cancel operations.
 
-### 251. Создать ProviderPaymentPort
+### 251. Create ProviderPaymentPort
 
-Определить authorize, capture, confirm, cancel и retrieve operations.
+Define authorize, capture, confirm, cancel, and retrieve operations.
 
-### 252. Создать ProviderRefundPort
+### 252. Create ProviderRefundPort
 
-Определить create и retrieve refund operations.
+Define create and retrieve refund operations.
 
-### 253. Создать ProviderInvoicePort
+### 253. Create ProviderInvoicePort
 
-Определить sync и retrieve provider invoices при поддержке capability.
+Define sync and retrieve provider invoice operations when the capability is supported.
 
-### 254. Создать ProviderWebhookPort
+### 254. Create ProviderWebhookPort
 
-Определить signature verification, parsing и event normalization.
+Define signature verification, parsing, and event normalization.
 
-### 255. Создать normalized provider errors
+### 255. Create normalized provider errors
 
-Преобразовывать provider-specific errors в единый error taxonomy.
+Transform provider-specific errors into a unified error taxonomy.
 
-### 256. Создать normalized provider events
+### 256. Create normalized provider events
 
-Преобразовывать webhooks в internal integration events.
+Transform webhooks into internal integration events.
 
-### 257. Реализовать provider registry
+### 257. Implement a provider registry
 
-Выбирать adapter по provider code и account configuration.
+Select an adapter by provider code and account configuration.
 
-### 258. Поддержать несколько provider accounts
+### 258. Support multiple provider accounts
 
-Разделять credentials по legal entity, region или merchant account.
+Separate credentials by legal entity, region, or merchant account.
 
-### 259. Реализовать provider routing
+### 259. Implement provider routing
 
-Выбирать provider по currency, country, payment method или product type.
+Select a provider by currency, country, payment method, or product type.
 
-### 260. Реализовать provider fallback policy
+### 260. Implement a provider fallback policy
 
-Определить допустимость повторной попытки через другого provider.
+Define whether retry through another provider is permissible.
 
-### 261. Запретить unsafe provider fallback
+### 261. Prohibit unsafe provider fallback
 
-Не создавать второй charge при неизвестном результате первой операции.
+Do not create a second charge when the result of the first operation is unknown.
 
-### 262. Реализовать provider request logging
+### 262. Implement provider request logging
 
-Хранить operation type, requestId, latency и sanitized result.
+Store operation type, requestId, latency, and sanitized result.
 
-### 263. Реализовать provider timeout policy
+### 263. Implement a provider timeout policy
 
-Настроить отдельные timeout для create, confirm, capture и retrieve.
+Configure separate timeouts for create, confirm, capture, and retrieve.
 
-### 264. Реализовать provider retry policy
+### 264. Implement a provider retry policy
 
-Повторять только безопасные и идемпотентные operations.
+Retry only safe and idempotent operations.
 
-### 265. Реализовать provider circuit breaker
+### 265. Implement a provider circuit breaker
 
-Останавливать запросы к временно недоступному provider.
+Stop requests to a temporarily unavailable provider.
 
-### 266. Реализовать provider rate limiting
+### 266. Implement provider rate limiting
 
-Соблюдать API limits и Retry-After.
+Observe API limits and Retry-After.
 
-### 267. Реализовать provider health status
+### 267. Implement provider health status
 
-Показывать availability, failure rate и degraded capabilities.
+Show availability, failure rate, and degraded capabilities.
 
-### 268. Создать fake provider adapter
+### 268. Create a fake provider adapter
 
-Обеспечить детерминированные success, failure, timeout и webhook scenarios.
+Provide deterministic success, failure, timeout, and webhook scenarios.
 
-## 14. Stripe-like и Paddle-like adapters
+## 14. Stripe-like and Paddle-like adapters
 
-### 269. Реализовать Stripe-like customer adapter
+### 269. Implement a Stripe-like customer adapter
 
-Создавать и синхронизировать provider customer objects.
+Create and synchronize provider customer objects.
 
-### 270. Реализовать Stripe-like price mapping
+### 270. Implement Stripe-like price mapping
 
-Связывать internal Product и Price с provider identifiers.
+Link internal Product and Price with provider identifiers.
 
-### 271. Реализовать Stripe-like checkout adapter
+### 271. Implement a Stripe-like checkout adapter
 
-Создавать hosted checkout sessions для one-time и recurring purchases.
+Create hosted checkout sessions for one-time and recurring purchases.
 
-### 272. Реализовать Stripe-like payment intent flow
+### 272. Implement a Stripe-like payment intent flow
 
-Поддержать requires_action, confirmation и capture.
+Support requires_action, confirmation, and capture.
 
-### 273. Реализовать Stripe-like subscription adapter
+### 273. Implement a Stripe-like subscription adapter
 
-Синхронизировать creation, updates, cancellation и provider status.
+Synchronize creation, updates, cancellation, and provider status.
 
-### 274. Реализовать Stripe-like refund adapter
+### 274. Implement a Stripe-like refund adapter
 
-Создавать partial и full refunds.
+Create partial and full refunds.
 
-### 275. Реализовать Stripe-like event normalization
+### 275. Implement Stripe-like event normalization
 
-Преобразовывать provider events в internal event types.
+Transform provider events into internal event types.
 
-### 276. Реализовать Stripe-like idempotency headers
+### 276. Implement Stripe-like idempotency headers
 
-Передавать стабильные keys для create и mutation requests.
+Pass stable keys for create and mutation requests.
 
-### 277. Реализовать Stripe-like metadata
+### 277. Implement Stripe-like metadata
 
-Сохранять internal entity IDs в разрешённых provider metadata fields.
+Store internal entity IDs in permitted provider metadata fields.
 
-### 278. Реализовать Stripe-like pagination
+### 278. Implement Stripe-like pagination
 
-Корректно синхронизировать provider collections через cursor pagination.
+Correctly synchronize provider collections through cursor pagination.
 
-### 279. Реализовать Paddle-like customer adapter
+### 279. Implement a Paddle-like customer adapter
 
-Создавать и сопоставлять provider customer entities.
+Create and map provider customer entities.
 
-### 280. Реализовать Paddle-like catalog mapping
+### 280. Implement Paddle-like catalog mapping
 
-Синхронизировать internal products и prices с provider catalog.
+Synchronize internal products and prices with the provider catalog.
 
-### 281. Реализовать Paddle-like checkout adapter
+### 281. Implement a Paddle-like checkout adapter
 
-Создавать transaction или checkout для Merchant of Record flow.
+Create a transaction or checkout for the Merchant of Record flow.
 
-### 282. Реализовать Paddle-like subscription adapter
+### 282. Implement a Paddle-like subscription adapter
 
-Обрабатывать provider-managed renewals и subscription changes.
+Handle provider-managed renewals and subscription changes.
 
-### 283. Реализовать Paddle-like transaction adapter
+### 283. Implement a Paddle-like transaction adapter
 
-Синхронизировать provider transaction, invoice и payment states.
+Synchronize provider transaction, invoice, and payment states.
 
-### 284. Реализовать Paddle-like tax data mapping
+### 284. Implement Paddle-like tax data mapping
 
-Сохранять рассчитанные provider taxes и jurisdiction metadata.
+Store calculated provider taxes and jurisdiction metadata.
 
-### 285. Реализовать Paddle-like refund adapter
+### 285. Implement a Paddle-like refund adapter
 
-Обрабатывать provider approval и asynchronous refund states.
+Handle provider approval and asynchronous refund states.
 
-### 286. Реализовать Paddle-like event normalization
+### 286. Implement Paddle-like event normalization
 
-Преобразовывать transaction, subscription и adjustment events.
+Transform transaction, subscription, and adjustment events.
 
-### 287. Разделить internal и provider invoices
+### 287. Separate internal and provider invoices
 
-Не считать provider invoice полной заменой internal billing model.
+Do not consider the provider invoice a complete replacement for the internal billing model.
 
-### 288. Реализовать provider ownership mode
+### 288. Implement provider ownership mode
 
-Определить, какие lifecycle transitions управляются internal system, а какие provider.
+Define which lifecycle transitions are controlled by the internal system and which by the provider.
 
-## 15. Webhook ingestion и processing
+## 15. Webhook ingestion and processing
 
-### 289. Создать webhook endpoint per provider
+### 289. Create a webhook endpoint per provider
 
-Разделить routing, secrets и parsers для каждого integration adapter.
+Separate routing, secrets, and parsers for each integration adapter.
 
-### 290. Сохранять raw webhook body
+### 290. Store the raw webhook body
 
-Обеспечить корректную signature verification и forensic analysis.
+Provide correct signature verification and forensic analysis.
 
-### 291. Проверять webhook signature
+### 291. Verify the webhook signature
 
-Отклонять неподписанные и поддельные requests.
+Reject unsigned and forged requests.
 
-### 292. Проверять webhook timestamp
+### 292. Verify the webhook timestamp
 
-Ограничивать допустимое окно для replayed requests.
+Limit the acceptable window for replayed requests.
 
-### 293. Ограничить webhook payload size
+### 293. Limit webhook payload size
 
-Защитить endpoint от memory exhaustion.
+Protect the endpoint from memory exhaustion.
 
-### 294. Спроектировать WebhookEvent entity
+### 294. Design the WebhookEvent entity
 
-Хранить providerEventId, type, payload, status, attempts и timestamps.
+Store providerEventId, type, payload, status, attempts, and timestamps.
 
-### 295. Сохранять webhook до обработки
+### 295. Store the webhook before processing
 
-Фиксировать raw event в PostgreSQL перед business handling.
+Record the raw event in PostgreSQL before business handling.
 
-### 296. Реализовать webhook deduplication
+### 296. Implement webhook deduplication
 
-Создать unique constraint по provider и providerEventId.
+Create a unique constraint on provider and providerEventId.
 
-### 297. Реализовать asynchronous webhook processing
+### 297. Implement asynchronous webhook processing
 
-Быстро отвечать provider и передавать обработку background worker.
+Respond to the provider quickly and pass processing to a background worker.
 
-### 298. Реализовать webhook status machine
+### 298. Implement the webhook state machine
 
-Поддержать received, processing, processed, ignored, failed и dead.
+Support received, processing, processed, ignored, failed, and dead states.
 
-### 299. Классифицировать webhook events
+### 299. Classify webhook events
 
-Разделить supported, unsupported, duplicate и malformed events.
+Separate supported, unsupported, duplicate, and malformed events.
 
-### 300. Реализовать normalized webhook event
+### 300. Implement a normalized webhook event
 
-Преобразовывать provider payload в стабильную internal schema.
+Transform the provider payload into a stable internal schema.
 
-### 301. Обрабатывать out-of-order webhooks
+### 301. Handle out-of-order webhooks
 
-Сравнивать provider version, timestamp и текущий internal state.
+Compare provider version, timestamp, and current internal state.
 
-### 302. Обрабатывать delayed webhooks
+### 302. Handle delayed webhooks
 
-Не откатывать более новое состояние устаревшим событием.
+Do not roll back a newer state with an outdated event.
 
-### 303. Реализовать webhook retry
+### 303. Implement webhook retry
 
-Повторять transient failures с exponential backoff и jitter.
+Retry transient failures with exponential backoff and jitter.
 
-### 304. Реализовать webhook dead-letter state
+### 304. Implement a webhook dead-letter state
 
-Изолировать события после исчерпания retry budget.
+Isolate events after the retry budget is exhausted.
 
-### 305. Реализовать webhook replay
+### 305. Implement webhook replay
 
-Повторно обрабатывать сохранённое событие после исправления handler.
+Reprocess a stored event after fixing the handler.
 
-### 306. Реализовать selective webhook replay
+### 306. Implement selective webhook replay
 
-Фильтровать события по provider, type, status и времени.
+Filter events by provider, type, status, and time.
 
-### 307. Реализовать webhook audit trail
+### 307. Implement a webhook audit trail
 
-Хранить историю attempts, errors и state transitions.
+Store the history of attempts, errors, and state transitions.
 
-### 308. Реализовать webhook handler locking
+### 308. Implement webhook handler locking
 
-Не позволять двум workers одновременно обрабатывать одно событие.
+Do not allow two workers to process one event simultaneously.
 
-### 309. Реализовать webhook observability
+### 309. Implement webhook observability
 
-Добавить metrics по latency, failure rate, duplicates и processing backlog.
+Add metrics for latency, failure rate, duplicates, and processing backlog.
 
-### 310. Тестировать webhook security
+### 310. Test webhook security
 
-Проверить invalid signature, replay, duplicate и oversized payload.
+Check invalid signature, replay, duplicate, and oversized payload.
 
-### 311. Тестировать webhook ordering
+### 311. Test webhook ordering
 
-Проверить последовательности success-before-pending и cancellation-before-update.
+Check success-before-pending and cancellation-before-update sequences.
 
-### 312. Создать provider webhook simulator
+### 312. Create a provider webhook simulator
 
-Генерировать подписанные events, duplicates, delays и reordered delivery.
+Generate signed events, duplicates, delays, and reordered delivery.
 
-## 16. Idempotency и concurrency control
+## 16. Idempotency and concurrency control
 
-### 313. Спроектировать IdempotencyRecord
+### 313. Design IdempotencyRecord
 
-Хранить key, scope, request hash, status, response и expiration.
+Store key, scope, request hash, status, response, and expiration.
 
-### 314. Реализовать HTTP idempotency middleware
+### 314. Implement HTTP idempotency middleware
 
-Защищать create subscription, payment, refund и checkout operations.
+Protect create subscription, payment, refund, and checkout operations.
 
-### 315. Проверять request fingerprint
+### 315. Check the request fingerprint
 
-Отклонять повторное использование key с другим payload.
+Reject reuse of the key with a different payload.
 
-### 316. Обрабатывать concurrent identical requests
+### 316. Handle concurrent identical requests
 
-Блокировать или ожидать завершения первой операции.
+Block or wait for completion of the first operation.
 
-### 317. Обрабатывать failed idempotent operations
+### 317. Handle failed idempotent operations
 
-Определить, какие ошибки сохраняются, а какие допускают retry.
+Define which errors are stored and which permit retry.
 
-### 318. Реализовать idempotency expiration
+### 318. Implement idempotency expiration
 
-Удалять records только после безопасного business window.
+Delete records only after a safe business window.
 
-### 319. Реализовать provider operation keys
+### 319. Implement provider operation keys
 
-Генерировать стабильный idempotency key на каждую external mutation.
+Generate a stable idempotency key for each external mutation.
 
-### 320. Реализовать unique business constraints
+### 320. Implement unique business constraints
 
-Предотвращать duplicate invoice, renewal, payment и refund на уровне PostgreSQL.
+Prevent duplicate invoice, renewal, payment, and refund at the PostgreSQL level.
 
-### 321. Реализовать optimistic locking
+### 321. Implement optimistic locking
 
-Добавить version field для Subscription, Invoice и Payment aggregates.
+Add a version field for Subscription, Invoice, and Payment aggregates.
 
-### 322. Реализовать pessimistic locking
+### 322. Implement pessimistic locking
 
-Использовать row lock для критичных invoice и balance updates.
+Use a row lock for critical invoice and balance updates.
 
-### 323. Защитить subscription renewal race
+### 323. Protect against a subscription renewal race
 
-Не позволять нескольким workers создать invoice за один period.
+Do not allow multiple workers to create an invoice for one period.
 
-### 324. Защитить duplicate capture
+### 324. Protect against duplicate capture
 
-Запретить повторный capture одной authorization.
+Prohibit repeated capture of one authorization.
 
-### 325. Защитить duplicate refund
+### 325. Protect against duplicate refund
 
-Использовать refund command key и cumulative refund validation.
+Use a refund command key and cumulative refund validation.
 
-### 326. Защитить customer balance race
+### 326. Protect against a customer balance race
 
-Обновлять credits и debits в serializable или locked transaction.
+Update credits and debits in a serializable or locked transaction.
 
-### 327. Реализовать transaction retries
+### 327. Implement transaction retries
 
-Повторять serialization failures без повторения external side effects.
+Retry serialization failures without repeating external side effects.
 
-### 328. Тестировать concurrency
+### 328. Test concurrency
 
-Запускать параллельные renewals, payments, refunds и webhook handlers.
+Run parallel renewals, payments, refunds, and webhook handlers.
 
-## 17. Transaction logs и financial ledger
+## 17. Transaction logs and financial ledger
 
-### 329. Разделить operational log и financial ledger
+### 329. Separate the operational log and financial ledger
 
-Не использовать application logs как источник финансовой истории.
+Do not use application logs as the source of financial history.
 
-### 330. Спроектировать BillingTransaction
+### 330. Design BillingTransaction
 
-Хранить business operation, amount, currency, entity references и status.
+Store business operation, amount, currency, entity references, and status.
 
-### 331. Спроектировать double-entry ledger
+### 331. Design a double-entry ledger
 
-Создать Accounts, JournalEntries и LedgerEntries.
+Create Accounts, JournalEntries, and LedgerEntries.
 
-### 332. Определить ledger accounts
+### 332. Define ledger accounts
 
-Добавить accounts receivable, cash, customer credits, refunds и provider clearing.
+Add accounts receivable, cash, customer credits, refunds, and provider clearing.
 
-### 333. Реализовать balanced journal entry
+### 333. Implement a balanced journal entry
 
-Требовать равенство debit и credit totals внутри currency.
+Require equality of debit and credit totals within a currency.
 
-### 334. Запретить изменение posted entries
+### 334. Prohibit changing posted entries
 
-Использовать reversing entry для исправления ошибок.
+Use a reversing entry to correct errors.
 
-### 335. Реализовать payment journal entry
+### 335. Implement a payment journal entry
 
-Отражать поступление денежных средств и уменьшение accounts receivable.
+Reflect receipt of funds and reduction of accounts receivable.
 
-### 336. Реализовать invoice journal entry
+### 336. Implement an invoice journal entry
 
-Отражать возникновение обязательства customer.
+Reflect creation of the customer obligation.
 
-### 337. Реализовать refund journal entry
+### 337. Implement a refund journal entry
 
-Уменьшать cash или provider clearing и создавать соответствующий debit.
+Reduce cash or provider clearing and create the corresponding debit.
 
-### 338. Реализовать credit journal entry
+### 338. Implement a credit journal entry
 
-Учитывать customer credit balance отдельно от cash payments.
+Account for customer credit balance separately from cash payments.
 
-### 339. Реализовать provider fee entry
+### 339. Implement a provider fee entry
 
-Учитывать комиссии provider как отдельную финансовую операцию.
+Account for provider fees as a separate financial operation.
 
-### 340. Реализовать tax liability entry
+### 340. Implement a tax liability entry
 
-Отделять налоговую часть invoice от revenue component.
+Separate the tax portion of the invoice from the revenue component.
 
-### 341. Реализовать settlement entry
+### 341. Implement a settlement entry
 
-Перемещать средства из provider clearing в bank cash account.
+Move funds from provider clearing to the bank cash account.
 
-### 342. Реализовать immutable transaction log
+### 342. Implement an immutable transaction log
 
-Сохранять каждое финансовое действие с correlation и causation metadata.
+Store every financial action with correlation and causation metadata.
 
-### 343. Реализовать transaction references
+### 343. Implement transaction references
 
-Связывать ledger entries с invoice, payment, refund и provider transaction.
+Link ledger entries to invoice, payment, refund, and provider transaction.
 
-### 344. Реализовать ledger query API
+### 344. Implement the ledger query API
 
-Получать entries по account, customer, entity и временным диапазонам.
+Retrieve entries by account, customer, entity, and time ranges.
 
-### 345. Реализовать balance calculation
+### 345. Implement balance calculation
 
-Вычислять balance из ledger entries, а не из изменяемого cached field.
+Calculate balance from ledger entries rather than from a mutable cached field.
 
-### 346. Реализовать balance snapshots
+### 346. Implement balance snapshots
 
-Ускорять чтение без потери возможности полного пересчёта.
+Accelerate reads without losing the ability to fully recalculate.
 
-### 347. Проверять ledger invariants
+### 347. Check ledger invariants
 
-Автоматически находить unbalanced или orphaned entries.
+Automatically find unbalanced or orphaned entries.
 
-### 348. Тестировать ledger scenarios
+### 348. Test ledger scenarios
 
-Проверить payment, partial refund, overpayment, fees и settlement.
+Check payment, partial refund, overpayment, fees, and settlement.
 
-## 18. Refunds, reversals и disputes
+## 18. Refunds, reversals, and disputes
 
-### 349. Спроектировать Refund entity
+### 349. Design the Refund entity
 
-Хранить paymentId, amount, reason, status и provider reference.
+Store paymentId, amount, reason, status, and provider reference.
 
-### 350. Реализовать Refund state machine
+### 350. Implement the Refund state machine
 
-Поддержать pending, requires_action, succeeded, failed и cancelled.
+Support pending, requires_action, succeeded, failed, and cancelled states.
 
-### 351. Реализовать full refund
+### 351. Implement a full refund
 
-Возвращать всю доступную refundable amount.
+Return the entire available refundable amount.
 
-### 352. Реализовать partial refund
+### 352. Implement a partial refund
 
-Возвращать часть payment с cumulative validation.
+Return part of the payment with cumulative validation.
 
-### 353. Проверять refundable balance
+### 353. Check the refundable balance
 
-Не позволять refunds превышать captured amount за вычетом предыдущих refunds.
+Do not allow refunds to exceed the captured amount minus previous refunds.
 
-### 354. Реализовать asynchronous refunds
+### 354. Implement asynchronous refunds
 
-Поддержать provider workflows с pending и approval states.
+Support provider workflows with pending and approval states.
 
-### 355. Реализовать refund failure handling
+### 355. Implement refund failure handling
 
-Разделить retryable provider failure и окончательный decline.
+Separate a retryable provider failure and a final decline.
 
-### 356. Реализовать refund idempotency
+### 356. Implement refund idempotency
 
-Не создавать повторный refund при повторе команды.
+Do not create a duplicate refund when the command is repeated.
 
-### 357. Реализовать invoice refund allocation
+### 357. Implement invoice refund allocation
 
-Распределять refund между invoice lines и tax amounts.
+Allocate the refund between invoice lines and tax amounts.
 
-### 358. Реализовать credit вместо cash refund
+### 358. Implement credit instead of a cash refund
 
-Поддержать возврат в customer balance.
+Support refunding to the customer balance.
 
-### 359. Спроектировать Dispute entity
+### 359. Design the Dispute entity
 
-Хранить provider case, reason, evidence deadline, amount и status.
+Store provider case, reason, evidence deadline, amount, and status.
 
-### 360. Реализовать Dispute state machine
+### 360. Implement the Dispute state machine
 
-Поддержать warning, needs_response, under_review, won и lost.
+Support warning, needs_response, under_review, won, and lost states.
 
-### 361. Обрабатывать dispute webhook
+### 361. Handle a dispute webhook
 
-Связывать provider dispute с internal Payment.
+Link the provider dispute to the internal Payment.
 
-### 362. Реализовать evidence submission abstraction
+### 362. Implement an evidence submission abstraction
 
-Передавать документы и structured evidence provider adapter.
+Pass documents and structured evidence through the provider adapter.
 
-### 363. Реализовать dispute deadline job
+### 363. Implement a dispute deadline job
 
-Уведомлять и эскалировать приближение срока ответа.
+Notify and escalate as the response deadline approaches.
 
-### 364. Реализовать chargeback ledger entry
+### 364. Implement a chargeback ledger entry
 
-Отражать изъятие средств и provider fees.
+Reflect withdrawal of funds and provider fees.
 
-### 365. Реализовать reversal
+### 365. Implement reversal
 
-Восстанавливать payment после отменённого chargeback или reversed refund.
+Restore the payment after a cancelled chargeback or reversed refund.
 
-### 366. Реализовать Refund и Dispute API
+### 366. Implement the Refund and Dispute API
 
-Добавить create, retrieve, list и evidence operations.
+Add create, retrieve, list, and evidence operations.
 
-## 19. Discounts, credits и dunning
 
-### 367. Спроектировать Coupon
+## 19. Discounts, credits, and dunning
 
-Добавить percentage или fixed amount, duration, currency и redemption limits.
+### 367. Design Coupon
 
-### 368. Спроектировать PromotionCode
+Add percentage or fixed amount, duration, currency, and redemption limits.
 
-Отделить пользовательский код от финансовой конфигурации Coupon.
+### 368. Design PromotionCode
 
-### 369. Реализовать coupon validation
+Separate the user-facing code from the financial Coupon configuration.
 
-Проверять active period, product scope, customer scope и usage limits.
+### 369. Implement coupon validation
 
-### 370. Реализовать once discount
+Check the active period, product scope, customer scope, and usage limits.
 
-Применять скидку только к одному invoice.
+### 370. Implement a once discount
 
-### 371. Реализовать repeating discount
+Apply the discount to only one invoice.
 
-Применять скидку заданное количество billing periods.
+### 371. Implement a repeating discount
 
-### 372. Реализовать forever discount
+Apply the discount for a specified number of billing periods.
 
-Применять скидку до удаления из subscription.
+### 372. Implement a forever discount
 
-### 373. Реализовать fixed amount discount
+Apply the discount until it is removed from the subscription.
 
-Корректно распределять сумму между eligible invoice lines.
+### 373. Implement a fixed amount discount
 
-### 374. Реализовать percentage discount
+Correctly distribute the amount between eligible invoice lines.
 
-Применять rate с детерминированным rounding.
+### 374. Implement a percentage discount
 
-### 375. Реализовать discount stacking policy
+Apply the rate with deterministic rounding.
 
-Определить совместимость и порядок применения нескольких discounts.
+### 375. Implement a discount stacking policy
 
-### 376. Спроектировать CustomerCredit
+Define compatibility and the order of application of multiple discounts.
 
-Хранить доступную сумму, origin, expiration и currency.
+### 376. Design CustomerCredit
 
-### 377. Реализовать credit grant
+Store available amount, origin, expiration, and currency.
 
-Начислять credit через отдельную auditable operation.
+### 377. Implement a credit grant
 
-### 378. Реализовать credit consumption
+Grant credit through a separate auditable operation.
 
-Применять credit к invoice до создания payment attempt.
+### 378. Implement credit consumption
 
-### 379. Реализовать credit expiration
+Apply credit to the invoice before creating a payment attempt.
 
-Списывать просроченный balance через ledger adjustment.
+### 379. Implement credit expiration
 
-### 380. Спроектировать dunning policy
+Write off the expired balance through a ledger adjustment.
 
-Определить retry schedule, notifications и terminal action.
+### 380. Design a dunning policy
 
-### 381. Реализовать automatic payment retries
+Define the retry schedule, notifications, and terminal action.
 
-Повторять failed payment по настраиваемому расписанию.
+### 381. Implement automatic payment retries
 
-### 382. Разделить soft и hard declines
+Retry a failed payment according to a configurable schedule.
 
-Не повторять бессмысленные payment attempts при окончательном decline.
+### 382. Separate soft and hard declines
 
-### 383. Реализовать past_due transition
+Do not repeat pointless payment attempts after a final decline.
 
-Переводить subscription при неоплаченном recurring invoice.
+### 383. Implement the past_due transition
 
-### 384. Реализовать dunning notifications
+Transition the subscription when a recurring invoice remains unpaid.
 
-Отправлять сообщения до и после повторных попыток.
+### 384. Implement dunning notifications
 
-### 385. Реализовать dunning recovery
+Send messages before and after retry attempts.
 
-Возвращать subscription в active после успешной оплаты.
+### 385. Implement dunning recovery
 
-### 386. Реализовать dunning terminal action
+Return the subscription to active after successful payment.
 
-Отменять, приостанавливать или ограничивать subscription после исчерпания policy.
+### 386. Implement a dunning terminal action
 
-## 20. Taxes, regions и multi-currency
+Cancel, suspend, or restrict the subscription after the policy is exhausted.
 
-### 387. Определить tax responsibility model
+## 20. Taxes, regions, and multi-currency
 
-Разделить расчёт налогов internal system, processor и Merchant of Record.
+### 387. Define the tax responsibility model
 
-### 388. Спроектировать TaxCalculation
+Separate tax calculation by the internal system, processor, and Merchant of Record.
 
-Хранить jurisdiction, rate, taxable amount, tax amount и provider source.
+### 388. Design TaxCalculation
 
-### 389. Реализовать tax inclusive pricing
+Store jurisdiction, rate, taxable amount, tax amount, and provider source.
 
-Поддержать цены с включённым налогом.
+### 389. Implement tax-inclusive pricing
 
-### 390. Реализовать tax exclusive pricing
+Support prices with tax included.
 
-Добавлять налог поверх catalog amount.
+### 390. Implement tax-exclusive pricing
 
-### 391. Реализовать tax exemption
+Add tax on top of the catalog amount.
 
-Поддержать customer exemption с документированной причиной.
+### 391. Implement tax exemption
 
-### 392. Реализовать reverse charge
+Support customer exemption with a documented reason.
 
-Обрабатывать B2B VAT reverse-charge сценарии.
+### 392. Implement reverse charge
 
-### 393. Реализовать tax identifier validation
+Handle B2B VAT reverse-charge scenarios.
 
-Проверять формат и сохранять verification status.
+### 393. Implement tax identifier validation
 
-### 394. Поддержать multiple tax rates
+Validate the format and store the verification status.
 
-Применять несколько налогов к одной invoice line.
+### 394. Support multiple tax rates
 
-### 395. Создать TaxProviderPort
+Apply multiple taxes to one invoice line.
 
-Абстрагировать external tax calculation service.
+### 395. Create TaxProviderPort
 
-### 396. Сохранять tax snapshot
+Abstract an external tax calculation service.
 
-Фиксировать рассчитанный налог при invoice finalization.
+### 396. Store a tax snapshot
 
-### 397. Реализовать tax adjustment
+Fix the calculated tax during invoice finalization.
 
-Корректировать налог через credit note или adjustment invoice.
+### 397. Implement tax adjustment
 
-### 398. Реализовать multi-currency catalog
+Correct tax through a credit note or adjustment invoice.
 
-Разрешать отдельные prices для поддерживаемых валют.
+### 398. Implement a multi-currency catalog
 
-### 399. Запретить mixed-currency invoice
+Allow separate prices for supported currencies.
 
-Требовать единую currency для всех invoice lines.
+### 399. Prohibit a mixed-currency invoice
 
-### 400. Спроектировать ExchangeRate
+Require one currency for all invoice lines.
 
-Хранить rate, source, effectiveAt и base/quote currencies.
+### 400. Design ExchangeRate
 
-### 401. Реализовать reporting currency conversion
+Store rate, source, effectiveAt, and base/quote currencies.
 
-Преобразовывать суммы только для отчётности, не изменяя original amounts.
+### 401. Implement reporting currency conversion
 
-### 402. Фиксировать exchange rate snapshot
+Convert amounts only for reporting without changing original amounts.
 
-Сохранять использованный курс для финансового отчёта.
+### 402. Fix an exchange rate snapshot
 
-## 21. Reconciliation и financial operations
+Store the rate used for the financial report.
 
-### 403. Спроектировать ProviderTransactionRecord
+## 21. Reconciliation and financial operations
 
-Хранить provider transaction, status, amount, fees и settlement data.
+### 403. Design ProviderTransactionRecord
 
-### 404. Реализовать provider synchronization job
+Store provider transaction, status, amount, fees, and settlement data.
 
-Периодически получать актуальное состояние незавершённых operations.
+### 404. Implement a provider synchronization job
 
-### 405. Реализовать payment reconciliation
+Periodically retrieve the current state of incomplete operations.
 
-Сравнивать internal Payment с provider charge или transaction.
+### 405. Implement payment reconciliation
 
-### 406. Реализовать refund reconciliation
+Compare the internal Payment with the provider charge or transaction.
 
-Сравнивать Refund status и amounts с provider.
+### 406. Implement refund reconciliation
 
-### 407. Реализовать subscription reconciliation
+Compare Refund status and amounts with the provider.
 
-Проверять plan, status, period и cancellation fields.
+### 407. Implement subscription reconciliation
 
-### 408. Реализовать invoice reconciliation
+Check plan, status, period, and cancellation fields.
 
-Сопоставлять totals, paid amount и provider invoice state.
+### 408. Implement invoice reconciliation
 
-### 409. Реализовать settlement reconciliation
+Compare totals, paid amount, and provider invoice state.
 
-Сравнивать provider payouts с ledger clearing account.
+### 409. Implement settlement reconciliation
 
-### 410. Реализовать fee reconciliation
+Compare provider payouts with the ledger clearing account.
 
-Проверять provider commissions и дополнительные adjustments.
+### 410. Implement fee reconciliation
 
-### 411. Спроектировать ReconciliationIssue
+Check provider commissions and additional adjustments.
 
-Хранить issue type, severity, entities, expected и actual values.
+### 411. Design ReconciliationIssue
 
-### 412. Реализовать automatic issue detection
+Store issue type, severity, entities, expected values, and actual values.
 
-Создавать issue при несовпадении state, amount или currency.
+### 412. Implement automatic issue detection
 
-### 413. Реализовать automatic repair
+Create an issue when state, amount, or currency does not match.
 
-Исправлять только однозначные и идемпотентные расхождения.
+### 413. Implement automatic repair
 
-### 414. Реализовать manual review workflow
+Correct only unambiguous and idempotent discrepancies.
 
-Предоставить operator действия для неоднозначных conflicts.
+### 414. Implement a manual review workflow
 
-### 415. Реализовать reconciliation locking
+Provide operator actions for ambiguous conflicts.
 
-Не запускать параллельное исправление одной операции.
+### 415. Implement reconciliation locking
 
-### 416. Реализовать provider balance report
+Do not run parallel correction of the same operation.
 
-Сопоставлять internal clearing balance с provider balance.
+### 416. Implement a provider balance report
 
-### 417. Реализовать daily financial close
+Compare the internal clearing balance with the provider balance.
 
-Фиксировать totals payments, refunds, fees, taxes и settlements за день.
+### 417. Implement daily financial close
 
-### 418. Реализовать close immutability
+Fix total payments, refunds, fees, taxes, and settlements for the day.
 
-Не изменять закрытый период без отдельного adjustment record.
+### 418. Implement close immutability
 
-### 419. Создать reconciliation CLI
+Do not change a closed period without a separate adjustment record.
 
-Добавить dry-run, filters, repair и export commands.
+### 419. Create a reconciliation CLI
 
-### 420. Создать financial export
+Add dry-run, filters, repair, and export commands.
 
-Экспортировать invoices, payments, refunds, fees и ledger entries в CSV или JSON.
+### 420. Create a financial export
 
-## 22. Security и compliance
+Export invoices, payments, refunds, fees, and ledger entries to CSV or JSON.
 
-### 421. Определить PCI DSS scope
+## 22. Security and compliance
 
-Документировать, какие компоненты касаются cardholder data и как scope минимизируется.
+### 421. Define the PCI DSS scope
 
-### 422. Не хранить raw card data
+Document which components touch cardholder data and how the scope is minimized.
 
-Использовать provider tokens, hosted fields или hosted checkout.
+### 422. Do not store raw card data
 
-### 423. Не логировать payment secrets
+Use provider tokens, hosted fields, or hosted checkout.
 
-Санитизировать card tokens, client secrets, webhook secrets и credentials.
+### 423. Do not log payment secrets
 
-### 424. Реализовать secrets management
+Sanitize card tokens, client secrets, webhook secrets, and credentials.
 
-Загружать provider keys из защищённого secret storage.
+### 424. Implement secrets management
 
-### 425. Реализовать credential rotation
+Load provider keys from protected secret storage.
 
-Поддержать ротацию API keys и webhook secrets без downtime.
+### 425. Implement credential rotation
 
-### 426. Реализовать webhook secret rotation
+Support rotation of API keys and webhook secrets without downtime.
 
-Проверять подпись несколькими active secrets во время переходного периода.
+### 426. Implement webhook secret rotation
 
-### 427. Защитить provider API clients
+Verify signatures with multiple active secrets during the transition period.
 
-Использовать TLS verification, timeout и controlled redirects.
+### 427. Protect provider API clients
 
-### 428. Реализовать RBAC
+Use TLS verification, timeout, and controlled redirects.
 
-Разделить customer, support, billing operator, finance и administrator permissions.
+### 428. Implement RBAC
 
-### 429. Реализовать tenant authorization
+Separate customer, support, billing operator, finance, and administrator permissions.
 
-Проверять ownership каждого customer, invoice, payment и subscription.
+### 429. Implement tenant authorization
 
-### 430. Реализовать field-level access control
+Check ownership of each customer, invoice, payment, and subscription.
 
-Скрывать tax data, addresses и provider metadata от неподходящих ролей.
+### 430. Implement field-level access control
 
-### 431. Реализовать audit log
+Hide tax data, addresses, and provider metadata from inappropriate roles.
 
-Фиксировать создание refunds, void invoices, credits и manual reconciliation.
+### 431. Implement an audit log
 
-### 432. Защитить audit log от изменения
+Record creation of refunds, void invoices, credits, and manual reconciliation.
 
-Использовать append-only records и ограниченные database permissions.
+### 432. Protect the audit log from modification
 
-### 433. Реализовать PII encryption
+Use append-only records and restricted database permissions.
 
-Шифровать чувствительные customer fields at rest.
+### 433. Implement PII encryption
 
-### 434. Реализовать data minimization
+Encrypt sensitive customer fields at rest.
 
-Хранить только данные, необходимые billing и legal requirements.
+### 434. Implement data minimization
 
-### 435. Реализовать data retention policies
+Store only data required for billing and legal requirements.
 
-Определить сроки хранения webhooks, invoices, transaction logs и PII.
+### 435. Implement data retention policies
 
-### 436. Реализовать customer anonymization
+Define retention periods for webhooks, invoices, transaction logs, and PII.
 
-Удалять необязательные персональные данные без повреждения financial history.
+### 436. Implement customer anonymization
 
-### 437. Реализовать rate limiting
+Remove optional personal data without damaging financial history.
 
-Ограничить checkout, payment, refund и webhook endpoints.
+### 437. Implement rate limiting
 
-### 438. Реализовать anti-replay protection
+Limit checkout, payment, refund, and webhook endpoints.
 
-Использовать timestamps, signatures и idempotency keys.
+### 438. Implement anti-replay protection
 
-### 439. Реализовать fraud signals abstraction
+Use timestamps, signatures, and idempotency keys.
 
-Сохранять provider risk score и normalized risk decision.
+### 439. Implement a fraud signals abstraction
 
-### 440. Создать security threat model
+Store the provider risk score and normalized risk decision.
 
-Рассмотреть duplicate charge, amount tampering, webhook forgery, tenant escape и credential theft.
+### 440. Create a security threat model
+
+Consider duplicate charge, amount tampering, webhook forgery, tenant escape, and credential theft.
 
 ## 23. Testing
 
-### 441. Создать unit tests Money
+### 441. Create Money unit tests
 
-Проверить arithmetic, currencies, rounding и allocation.
+Check arithmetic, currencies, rounding, and allocation.
 
-### 442. Создать unit tests billing periods
+### 442. Create billing period unit tests
 
-Проверить month boundaries, leap year и anchors.
+Check month boundaries, leap years, and anchors.
 
-### 443. Создать unit tests pricing calculator
+### 443. Create pricing calculator unit tests
 
-Проверить flat, unit, volume, graduated и package pricing.
+Check flat, unit, volume, graduated, and package pricing.
 
-### 444. Создать unit tests subscription state machine
+### 444. Create subscription state machine unit tests
 
-Проверить activation, pause, resume, cancel и expiration transitions.
+Check activation, pause, resume, cancel, and expiration transitions.
 
-### 445. Создать unit tests invoice state machine
+### 445. Create invoice state machine unit tests
 
-Проверить finalization, payment, void и uncollectible transitions.
+Check finalization, payment, void, and uncollectible transitions.
 
-### 446. Создать unit tests payment state machine
+### 446. Create payment state machine unit tests
 
-Проверить authorization, requires_action, capture, failure и cancellation.
+Check authorization, requires_action, capture, failure, and cancellation.
 
-### 447. Создать unit tests refund state machine
+### 447. Create refund state machine unit tests
 
-Проверить partial, full, pending и failed refunds.
+Check partial, full, pending, and failed refunds.
 
-### 448. Создать unit tests tax calculation
+### 448. Create tax calculation unit tests
 
-Проверить inclusive, exclusive, exemption и multiple rates.
+Check inclusive, exclusive, exemption, and multiple rates.
 
-### 449. Создать unit tests discounts
+### 449. Create discount unit tests
 
-Проверить amount, percentage, duration, scope и stacking.
+Check amount, percentage, duration, scope, and stacking.
 
-### 450. Создать unit tests dunning
+### 450. Create dunning unit tests
 
-Проверить retry schedule, recovery и terminal action.
+Check the retry schedule, recovery, and terminal action.
 
-### 451. Создать unit tests ledger
+### 451. Create ledger unit tests
 
-Проверить double-entry balance и immutable corrections.
+Check double-entry balance and immutable corrections.
 
-### 452. Создать architecture tests
+### 452. Create architecture tests
 
-Проверять imports, module boundaries и infrastructure isolation.
+Check imports, module boundaries, and infrastructure isolation.
 
-### 453. Настроить Testcontainers PostgreSQL
+### 453. Configure Testcontainers PostgreSQL
 
-Запускать integration tests на реальном database engine.
+Run integration tests on a real database engine.
 
-### 454. Настроить Testcontainers Redis
+### 454. Configure Testcontainers Redis
 
-Проверять locks, jobs, idempotency cache и rate limiting.
+Check locks, jobs, the idempotency cache, and rate limiting.
 
-### 455. Настроить Testcontainers RabbitMQ
+### 455. Configure Testcontainers RabbitMQ
 
-Проверять asynchronous invoice generation и provider synchronization events.
+Check asynchronous invoice generation and provider synchronization events.
 
-### 456. Создать repository integration tests
+### 456. Create repository integration tests
 
-Проверить constraints, locks, transactions и optimistic concurrency.
+Check constraints, locks, transactions, and optimistic concurrency.
 
-### 457. Создать provider contract test suite
+### 457. Create a provider contract test suite
 
-Запускать единый набор tests для fake, Stripe-like и Paddle-like adapters.
+Run a unified set of tests for fake, Stripe-like, and Paddle-like adapters.
 
-### 458. Создать webhook integration tests
+### 458. Create webhook integration tests
 
-Проверить signature, persistence, deduplication, retry и replay.
+Check signature, persistence, deduplication, retry, and replay.
 
-### 459. Создать idempotency integration tests
+### 459. Create idempotency integration tests
 
-Проверить sequential и concurrent повторные requests.
+Check sequential and concurrent repeated requests.
 
-### 460. Создать subscription renewal integration tests
+### 460. Create subscription renewal integration tests
 
-Проверить единственную генерацию invoice и payment attempt.
+Check single invoice generation and payment attempt creation.
 
-### 461. Создать invoice calculation integration tests
+### 461. Create invoice calculation integration tests
 
-Проверить совместную работу usage, discounts, credits и taxes.
+Check combined operation of usage, discounts, credits, and taxes.
 
-### 462. Создать payment processing integration tests
+### 462. Create payment processing integration tests
 
-Проверить provider request, webhook confirmation и invoice update.
+Check the provider request, webhook confirmation, and invoice update.
 
-### 463. Создать refund integration tests
+### 463. Create refund integration tests
 
-Проверить provider call, ledger entry и invoice allocation.
+Check the provider call, ledger entry, and invoice allocation.
 
-### 464. Создать reconciliation integration tests
+### 464. Create reconciliation integration tests
 
-Проверить detection и repair намеренно созданных расхождений.
+Check detection and repair of intentionally created discrepancies.
 
-### 465. Создать end-to-end one-time purchase test
+### 465. Create an end-to-end one-time purchase test
 
-Проверить checkout, invoice, payment, ledger и receipt.
+Check checkout, invoice, payment, ledger, and receipt.
 
-### 466. Создать end-to-end subscription test
+### 466. Create an end-to-end subscription test
 
-Проверить checkout, activation, renewal и cancellation.
+Check checkout, activation, renewal, and cancellation.
 
-### 467. Создать end-to-end trial conversion test
+### 467. Create an end-to-end trial conversion test
 
-Проверить trial, invoice generation и failed payment behavior.
+Check the trial, invoice generation, and failed payment behavior.
 
-### 468. Создать end-to-end dunning test
+### 468. Create an end-to-end dunning test
 
-Проверить decline, retries, notifications и recovery.
+Check decline, retries, notifications, and recovery.
 
-### 469. Создать end-to-end usage billing test
+### 469. Create an end-to-end usage billing test
 
-Проверить ingestion, aggregation, invoice и payment.
+Check ingestion, aggregation, invoice, and payment.
 
-### 470. Создать end-to-end refund test
+### 470. Create an end-to-end refund test
 
-Проверить partial refund, webhook, ledger и final balances.
+Check partial refund, webhook, ledger, and final balances.
 
-### 471. Тестировать duplicate webhooks
+### 471. Test duplicate webhooks
 
-Подтвердить отсутствие повторных charges, refunds и state transitions.
+Confirm the absence of duplicate charges, refunds, and state transitions.
 
-### 472. Тестировать out-of-order webhooks
+### 472. Test out-of-order webhooks
 
-Подтвердить защиту terminal и более новых states.
+Confirm protection of terminal and newer states.
 
-### 473. Тестировать provider timeout
+### 473. Test provider timeout
 
-Проверить unknown result, reconciliation и отсутствие duplicate retry.
+Check unknown result, reconciliation, and the absence of duplicate retry.
 
-### 474. Тестировать database failure
+### 474. Test database failure
 
-Проверить rollback и отсутствие external call до commit в небезопасных flows.
+Check rollback and the absence of an external call before commit in unsafe flows.
 
-### 475. Тестировать worker crash
+### 475. Test worker crash
 
-Проверить повторную обработку renewals, invoices и webhooks.
+Check repeated processing of renewals, invoices, and webhooks.
 
-### 476. Тестировать concurrent refund requests
+### 476. Test concurrent refund requests
 
-Подтвердить соблюдение refundable balance.
+Confirm compliance with the refundable balance.
 
-### 477. Тестировать concurrent subscription changes
+### 477. Test concurrent subscription changes
 
-Проверить optimistic locking и version conflicts.
+Check optimistic locking and version conflicts.
 
-### 478. Создать property-based tests
+### 478. Create property-based tests
 
-Генерировать комбинации amounts, discounts, taxes и allocations.
+Generate combinations of amounts, discounts, taxes, and allocations.
 
-### 479. Создать golden tests invoice documents
+### 479. Create golden tests for invoice documents
 
-Проверять стабильность PDF и serialized invoice snapshots.
+Check the stability of PDF and serialized invoice snapshots.
 
-### 480. Создать provider sandbox tests
+### 480. Create provider sandbox tests
 
-Проверять реальные test-mode flows без включения их в обычный CI.
+Check real test-mode flows without including them in regular CI.
 
-## 24. Performance и reliability
 
-### 481. Определить performance targets
+## 24. Performance and reliability
 
-Зафиксировать throughput, p95 latency, webhook backlog и renewal duration.
+### 481. Define performance targets
 
-### 482. Создать checkout load test
+Record throughput, p95 latency, webhook backlog, and renewal duration.
 
-Измерить создание sessions и provider client saturation.
+### 482. Create a checkout load test
 
-### 483. Создать payment API load test
+Measure session creation and provider client saturation.
 
-Проверить idempotency и database contention под параллельной нагрузкой.
+### 483. Create a payment API load test
 
-### 484. Создать webhook load test
+Check idempotency and database contention under parallel load.
 
-Измерить ingestion rate, persistence latency и worker throughput.
+### 484. Create a webhook load test
 
-### 485. Создать renewal batch test
+Measure ingestion rate, persistence latency, and worker throughput.
 
-Проверить массовую генерацию invoices в billing boundary.
+### 485. Create a renewal batch test
 
-### 486. Создать usage ingestion load test
+Check mass invoice generation at the billing boundary.
 
-Измерить deduplication и aggregation при большом потоке events.
+### 486. Create a usage ingestion load test
 
-### 487. Оптимизировать billing indexes
+Measure deduplication and aggregation under a large event flow.
 
-Добавить indexes для due subscriptions, open invoices, pending webhooks и provider references.
+### 487. Optimize billing indexes
 
-### 488. Реализовать batch processing
+Add indexes for due subscriptions, open invoices, pending webhooks, and provider references.
 
-Обрабатывать renewals, reconciliation и webhook records ограниченными batches.
+### 488. Implement batch processing
 
-### 489. Использовать SKIP LOCKED
+Process renewals, reconciliation, and webhook records in limited batches.
 
-Распределять background tasks между несколькими workers.
+### 489. Use SKIP LOCKED
 
-### 490. Реализовать backpressure
+Distribute background tasks between multiple workers.
 
-Ограничивать provider calls и database concurrency при росте backlog.
+### 490. Implement backpressure
 
-### 491. Реализовать retry budget
+Limit provider calls and database concurrency as backlog grows.
 
-Не допускать бесконечных provider и webhook retries.
+### 491. Implement a retry budget
 
-### 492. Реализовать circuit breakers
+Prevent infinite provider and webhook retries.
 
-Изолировать недоступного provider без остановки остальных billing operations.
+### 492. Implement circuit breakers
 
-### 493. Реализовать graceful degradation
+Isolate an unavailable provider without stopping other billing operations.
 
-Продолжать internal invoice generation при временной недоступности необязательных integrations.
+### 493. Implement graceful degradation
 
-### 494. Реализовать outbox pattern
+Continue internal invoice generation while optional integrations are temporarily unavailable.
 
-Атомарно сохранять billing state и integration events.
+### 494. Implement the outbox pattern
+
+Atomically store billing state and integration events.
 
 ## 25. Observability
 
-### 495. Реализовать structured logging
+### 495. Implement structured logging
 
-Добавить requestId, customerId, subscriptionId, invoiceId, paymentId и provider operationId.
+Add requestId, customerId, subscriptionId, invoiceId, paymentId, and provider operationId.
 
-### 496. Санитизировать billing logs
+### 496. Sanitize billing logs
 
-Удалять PII, credentials и payment method secrets.
+Remove PII, credentials, and payment method secrets.
 
-### 497. Реализовать OpenTelemetry tracing
+### 497. Implement OpenTelemetry tracing
 
-Трассировать HTTP, database, broker, worker и provider calls.
+Trace HTTP, database, broker, worker, and provider calls.
 
-### 498. Передавать correlation context
+### 498. Propagate correlation context
 
-Связывать checkout, webhook, payment и reconciliation operations.
+Link checkout, webhook, payment, and reconciliation operations.
 
-### 499. Добавить payment metrics
+### 499. Add payment metrics
 
-Собирать attempts, successes, failures, declines и requires_action.
+Collect attempts, successes, failures, declines, and requires_action.
 
-### 500. Добавить subscription metrics
+### 500. Add subscription metrics
 
-Собирать activations, renewals, cancellations, pauses и past_due transitions.
+Collect activations, renewals, cancellations, pauses, and past_due transitions.
 
-### 501. Добавить invoice metrics
+### 501. Add invoice metrics
 
-Собирать generated, finalized, paid, void и uncollectible invoices.
+Collect generated, finalized, paid, void, and uncollectible invoices.
 
-### 502. Добавить webhook metrics
+### 502. Add webhook metrics
 
-Собирать received, duplicate, failed, retried и dead events.
+Collect received, duplicate, failed, retried, and dead events.
 
-### 503. Добавить provider metrics
+### 503. Add provider metrics
 
-Собирать latency, error rate, timeouts, rate limits и circuit state.
+Collect latency, error rate, timeouts, rate limits, and circuit state.
 
-### 504. Добавить dunning metrics
+### 504. Add dunning metrics
 
-Собирать recovery rate, retry count и terminal cancellation rate.
+Collect recovery rate, retry count, and terminal cancellation rate.
 
-### 505. Добавить financial metrics
+### 505. Add financial metrics
 
-Собирать gross volume, refunds, fees, taxes и net collected amount.
+Collect gross volume, refunds, fees, taxes, and net collected amount.
 
-### 506. Добавить reconciliation metrics
+### 506. Add reconciliation metrics
 
-Собирать issue count, unresolved age и automatic repair rate.
+Collect issue count, unresolved age, and automatic repair rate.
 
-### 507. Создать Grafana billing dashboard
+### 507. Create a Grafana billing dashboard
 
-Показать subscriptions, invoices, payments и provider health.
+Show subscriptions, invoices, payments, and provider health.
 
-### 508. Создать Grafana operations dashboard
+### 508. Create a Grafana operations dashboard
 
-Показать webhook backlog, job lag, failures и reconciliation issues.
+Show webhook backlog, job lag, failures, and reconciliation issues.
 
-### 509. Настроить alerts
+### 509. Configure alerts
 
-Создать alerts на payment failure spike, webhook backlog, renewal failures и reconciliation drift.
+Create alerts for a payment failure spike, webhook backlog, renewal failures, and reconciliation drift.
 
-### 510. Определить billing SLI и SLO
+### 510. Define billing SLI and SLO
 
-Зафиксировать payment processing success, invoice generation latency и webhook freshness.
+Record payment processing success, invoice generation latency, and webhook freshness.
 
-## 26. Deployment и эксплуатация
+## 26. Deployment and operations
 
-### 511. Создать production Dockerfiles
+### 511. Create production Dockerfiles
 
-Использовать multi-stage build, non-root user и минимальный runtime image.
+Use a multi-stage build, non-root user, and minimal runtime image.
 
-### 512. Разделить API и worker deployments
+### 512. Separate API and worker deployments
 
-Масштабировать HTTP traffic и background processing независимо.
+Scale HTTP traffic and background processing independently.
 
-### 513. Настроить resource limits
+### 513. Configure resource limits
 
-Ограничить CPU и memory для API, webhook processor и workers.
+Limit CPU and memory for the API, webhook processor, and workers.
 
-### 514. Реализовать consumer draining
+### 514. Implement consumer draining
 
-Завершать активные webhook и renewal jobs перед shutdown.
+Finish active webhook and renewal jobs before shutdown.
 
-### 515. Настроить rolling deployment
+### 515. Configure rolling deployment
 
-Обновлять приложения без duplicate processing и потери jobs.
+Update applications without duplicate processing or job loss.
 
-### 516. Реализовать database migration policy
+### 516. Implement a database migration policy
 
-Разделить backward-compatible schema rollout и destructive cleanup.
+Separate backward-compatible schema rollout and destructive cleanup.
 
-### 517. Реализовать zero-downtime contract changes
+### 517. Implement zero-downtime contract changes
 
-Поддерживать старые и новые provider event mappings во время deployment.
+Support old and new provider event mappings during deployment.
 
-### 518. Настроить worker autoscaling
+### 518. Configure worker autoscaling
 
-Масштабировать workers по webhook backlog и scheduled jobs.
+Scale workers by webhook backlog and scheduled jobs.
 
-### 519. Ограничить autoscaling
+### 519. Limit autoscaling
 
-Не перегружать PostgreSQL и provider API при резком росте workers.
+Do not overload PostgreSQL and the provider API when the number of workers grows sharply.
 
-### 520. Настроить PostgreSQL backup
+### 520. Configure PostgreSQL backup
 
-Обеспечить point-in-time recovery финансовых данных.
+Provide point-in-time recovery of financial data.
 
-### 521. Настроить Redis persistence
+### 521. Configure Redis persistence
 
-Сохранять job и lock state согласно выбранной reliability model.
+Preserve job and lock state according to the selected reliability model.
 
-### 522. Реализовать disaster recovery procedure
+### 522. Implement a disaster recovery procedure
 
-Восстановить database, workers и provider synchronization после потери environment.
+Restore the database, workers, and provider synchronization after loss of the environment.
 
-### 523. Создать runbook payment incident
+### 523. Create a payment incident runbook
 
-Описать диагностику duplicate, missing и stuck payments.
+Describe diagnostics for duplicate, missing, and stuck payments.
 
-### 524. Создать runbook webhook backlog
+### 524. Create a webhook backlog runbook
 
-Описать проверку provider delivery, workers, errors и dead events.
+Describe checks for provider delivery, workers, errors, and dead events.
 
-### 525. Создать runbook renewal failure
+### 525. Create a renewal failure runbook
 
-Описать поиск affected subscriptions и безопасный rerun.
+Describe finding affected subscriptions and safe rerun.
 
-### 526. Создать runbook reconciliation drift
+### 526. Create a reconciliation drift runbook
 
-Описать сравнение provider state, internal state и ledger.
+Describe comparison of provider state, internal state, and the ledger.
 
-### 527. Создать runbook provider outage
+### 527. Create a provider outage runbook
 
-Описать circuit breaker, delayed processing и recovery.
+Describe the circuit breaker, delayed processing, and recovery.
 
-### 528. Создать runbook incorrect invoice
+### 528. Create an incorrect invoice runbook
 
-Описать void, credit note, refund и customer communication workflow.
+Describe the void, credit note, refund, and customer communication workflow.
 
-## 27. Документация и итоговые сценарии
+## 27. Documentation and final scenarios
 
-### 529. Создать README репозитория
+### 529. Create the repository README
 
-Описать назначение Payex, архитектуру, возможности и quick start.
+Describe Payex's purpose, architecture, capabilities, and quick start.
 
-### 530. Создать C4 System Context diagram
+### 530. Create a C4 System Context diagram
 
-Показать customers, operators, payment providers и внешние tax services.
+Show customers, operators, payment providers, and external tax services.
 
-### 531. Создать C4 Container diagram
+### 531. Create a C4 Container diagram
 
-Показать API, webhook processor, workers, PostgreSQL, Redis и broker.
+Show the API, webhook processor, workers, PostgreSQL, Redis, and broker.
 
-### 532. Создать component diagrams
+### 532. Create component diagrams
 
-Показать domain, application, ports и provider adapters.
+Show domain, application, ports, and provider adapters.
 
-### 533. Создать sequence diagram checkout
+### 533. Create a checkout sequence diagram
 
-Показать создание session, provider redirect, webhook и subscription activation.
+Show session creation, provider redirect, webhook, and subscription activation.
 
-### 534. Создать sequence diagram renewal
+### 534. Create a renewal sequence diagram
 
-Показать period closing, invoice generation, payment и subscription transition.
+Show period closing, invoice generation, payment, and subscription transition.
 
-### 535. Создать sequence diagram failed payment
+### 535. Create a failed payment sequence diagram
 
-Показать decline, dunning, retries и terminal action.
+Show decline, dunning, retries, and terminal action.
 
-### 536. Создать sequence diagram refund
+### 536. Create a refund sequence diagram
 
-Показать command, provider call, webhook, ledger и invoice update.
+Show the command, provider call, webhook, ledger, and invoice update.
 
-### 537. Создать sequence diagram reconciliation
+### 537. Create a reconciliation sequence diagram
 
-Показать обнаружение расхождения и controlled repair.
+Show discrepancy detection and controlled repair.
 
-### 538. Документировать payment state machines
+### 538. Document payment state machines
 
-Описать states, transitions, triggers и terminal conditions.
+Describe states, transitions, triggers, and terminal conditions.
 
-### 539. Документировать provider abstraction
+### 539. Document provider abstraction
 
-Описать capabilities, normalization, routing и failure handling.
+Describe capabilities, normalization, routing, and failure handling.
 
-### 540. Документировать webhook contracts
+### 540. Document webhook contracts
 
-Описать verification, storage, deduplication, ordering и replay.
+Describe verification, storage, deduplication, ordering, and replay.
 
-### 541. Документировать financial invariants
+### 541. Document financial invariants
 
-Зафиксировать Money, Invoice, Payment, Refund и Ledger rules.
+Record Money, Invoice, Payment, Refund, and Ledger rules.
 
-### 542. Создать ADR provider ownership
+### 542. Create an ADR for provider ownership
 
-Зафиксировать границы internal billing и provider-managed lifecycle.
+Record the boundaries of internal billing and provider-managed lifecycle.
 
-### 543. Создать ADR invoice authority
+### 543. Create an ADR for invoice authority
 
-Определить, является ли internal или provider invoice юридически значимым документом.
+Determine whether the internal or provider invoice is the legally significant document.
 
-### 544. Создать ADR ledger model
+### 544. Create an ADR for the ledger model
 
-Обосновать double-entry или упрощённый immutable transaction model.
+Justify double-entry or a simplified immutable transaction model.
 
-### 545. Реализовать production-style Stripe-like flow
+### 545. Implement a production-style Stripe-like flow
 
-Показать subscription checkout, 3DS, webhook, renewal, refund и reconciliation.
+Show subscription checkout, 3DS, webhook, renewal, refund, and reconciliation.
 
-### 546. Реализовать production-style Paddle-like flow
+### 546. Implement a production-style Paddle-like flow
 
-Показать Merchant of Record checkout, taxes, provider-managed subscription и refund.
+Show Merchant of Record checkout, taxes, provider-managed subscription, and refund.
 
-### 547. Реализовать provider switching scenario
+### 547. Implement a provider switching scenario
 
-Перевести новых customers на другой provider без изменения существующих subscriptions.
+Move new customers to another provider without changing existing subscriptions.
 
-### 548. Реализовать duplicate payment protection scenario
+### 548. Implement a duplicate payment protection scenario
 
-Отправить конкурентные requests и подтвердить единственный provider charge.
+Send concurrent requests and confirm a single provider charge.
 
-### 549. Реализовать webhook recovery scenario
+### 549. Implement a webhook recovery scenario
 
-Исправить broken handler и выполнить selective replay без повторных side effects.
+Fix the broken handler and perform selective replay without duplicate side effects.
 
-### 550. Реализовать billing recovery scenario
+### 550. Implement a billing recovery scenario
 
-Восстановить состояние invoices, payments и subscriptions через provider reconciliation.
+Restore the state of invoices, payments, and subscriptions through provider reconciliation.
 ents, webhook processing, provider abstraction, Stripe/Paddle-like adapters, idempotency, transaction logs, payment state machines, and billing domain modeling.
