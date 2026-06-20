@@ -1,5 +1,5 @@
 import { createApp } from '~/app'
-import { env } from '~/config/env'
+import { env } from '~/env'
 
 const app = createApp()
 
