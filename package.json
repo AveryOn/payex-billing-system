@@ -3,17 +3,24 @@
   "version": "1.0.0",
   "description": "**Payex Billing System** — учебный billing-сервис, разрабатываемый как pet-проект для углубления знаний в backend-разработке, проектировании распределённых систем, интеграции микросервисов и построении транспортно-независимой архитектуры.",
   "main": "index.js",
+  "type": "module",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "setup": "npm install",
+    "dev": "tsx watch --clear-screen=false src/main.ts",
+    "build": "tsup",
+    "start": "node dist/main.js",
+    "typecheck": "tsc --noEmit"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/AveryOn/payex-billing-system.git"
   },
+  "engines": {
+    "node": ">=24 <25"
+  },
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "type": "commonjs",
   "bugs": {
     "url": "https://github.com/AveryOn/payex-billing-system/issues"
   },
