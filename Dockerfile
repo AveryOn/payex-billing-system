@@ -6,7 +6,7 @@ COPY package.json package-lock.json ./
 
 FROM base AS development
 
-RUN npm ci
+RUN npm ci --include=dev --ignore-scripts
 
 COPY . .
 
@@ -16,7 +16,7 @@ CMD ["npm", "run", "dev"]
 
 FROM base AS build
 
-RUN npm ci
+RUN npm ci --include=dev --ignore-scripts
 
 COPY . .
 
@@ -25,7 +25,7 @@ RUN npm run build
 
 FROM base AS production-dependencies
 
-RUN npm ci --omit=dev
+RUN npm ci --omit=dev --ignore-scripts
 
 FROM node:24-alpine AS production
 
