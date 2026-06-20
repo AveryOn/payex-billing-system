@@ -8,7 +8,7 @@ import express, {
   export function createApp(): Express {
     const app = express()
   
-    app.disable('x-powered-by')
+    app.disable('x-powered-by');
   
     app.use(express.json())
   
