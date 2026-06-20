@@ -20,10 +20,14 @@
     "verify": "npm run typecheck && npm run lint && npm run format:check && npm run test",
     "prepare": "husky",
     "source-code:generate": "node scripts/generate-project-source.mjs",
-    "dev:docker:up": "./scripts/docker-up.sh",
-    "dev:docker:renew": "./scripts/docker-renew.sh",
-    "dev:docker:reset": "./scripts/docker-reset.sh",
-    "dev:docker:control": "./scripts/docker-control.sh"
+    "dev:docker:up": "./scripts/docker-up.sh dev",
+    "dev:docker:renew": "./scripts/docker-renew.sh dev",
+    "dev:docker:reset": "./scripts/docker-reset.sh dev",
+    "dev:docker:control": "./scripts/docker-control.sh dev",
+    "prod:docker:up": "./scripts/docker-up.sh prod",
+    "prod:docker:renew": "./scripts/docker-renew.sh prod",
+    "prod:docker:reset": "./scripts/docker-reset.sh prod",
+    "prod:docker:control": "./scripts/docker-control.sh prod"
   },
   "repository": {
     "type": "git",
