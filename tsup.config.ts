@@ -1,13 +1,13 @@
-import { defineConfig } from 'tsup'
+import { defineConfig } from "tsup";
 
 export default defineConfig({
-  entry: ['src/main.ts'],
+  entry: ["src/main.ts"],
 
-  outDir: 'dist',
+  outDir: "dist",
 
-  format: ['esm'],
-  platform: 'node',
-  target: 'node24',
+  format: ["esm"],
+  platform: "node",
+  target: "node24",
 
   bundle: true,
   splitting: false,
@@ -18,11 +18,11 @@ export default defineConfig({
   minify: false,
   keepNames: true,
 
-  tsconfig: 'tsconfig.json',
+  tsconfig: "tsconfig.json",
 
   outExtension() {
     return {
-      js: '.js'
-    }
-  }
-})
+      js: ".js",
+    };
+  },
+});

@@ -1,20 +1,20 @@
-const DEFAULT_PORT = 3000
+const DEFAULT_PORT = 3000;
 
 function parsePort(value: string | undefined): number {
   if (value === undefined) {
-    return DEFAULT_PORT
+    return DEFAULT_PORT;
   }
 
-  const port = Number(value)
+  const port = Number(value);
 
   if (!Number.isInteger(port) || port <= 0 || port > 65_535) {
-    throw new Error(`Invalid PORT value: ${value}`)
+    throw new Error(`Invalid PORT value: ${value}`);
   }
 
-  return port
+  return port;
 }
 
 export const env = Object.freeze({
-  nodeEnv: process.env.NODE_ENV ?? 'development',
-  port: parsePort(process.env.PORT)
-})
+  nodeEnv: process.env.NODE_ENV ?? "development",
+  port: parsePort(process.env.PORT),
+});

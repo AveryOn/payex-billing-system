@@ -1,40 +1,30 @@
-import express, {
-    type Express,
-    type Request,
-    type Response
-  } from 'express'
+import express, { type Express, type Request, type Response } from "express";
 
-  export function createApp(): Express {
-    const app = express()
+export function createApp(): Express {
+  const app = express();
 
-    app.disable('x-powered-by');
+  app.disable("x-powered-by");
 
-    app.use(express.json())
+  app.use(express.json());
 
-    app.get('/health', (_request: Request, response: Response) => {
-      response.status(200).json({
-        status: 'ok',
-        service: 'payex-billing-system',
-        timestamp: new Date().toISOString()
-      })
-    })
+  app.get("/health", (_request: Request, response: Response) => {
+    response.status(200).json({
+      status: "ok",
+      service: "payex-billing-system",
+      timestamp: new Date().toISOString(),
+    });
+  });
 
-    app.use(
-      (
-        error: unknown,
-        _request: Request,
-        response: Response,
-      ) => {
-        console.error(error)
+  app.use((error: unknown, _request: Request, response: Response) => {
+    console.error(error);
 
-        response.status(500).json({
-          error: {
-            code: 'INTERNAL_SERVER_ERROR',
-            message: 'An unexpected error occurred'
-          }
-        })
-      }
-    )
+    response.status(500).json({
+      error: {
+        code: "INTERNAL_SERVER_ERROR",
+        message: "An unexpected error occurred",
+      },
+    });
+  });
 
-    return app
-  }
+  return app;
+}

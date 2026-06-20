@@ -1,6 +1,5 @@
 # Payex Billing System
 
-
 #### A billing and payments backend system covering products, plans, subscriptions, invoices, paym# Payex Billing System Roadmap
 
 ## 1. Billing and payment systems fundamentals
@@ -692,7 +691,6 @@ Notify when a specified percentage of the limit is reached.
 ### 168. Test usage billing
 
 Check duplicates, late events, aggregation, and tiered calculations.
-
 
 ## 10. Checkout and purchase flows
 
@@ -1504,7 +1502,6 @@ Restore the payment after a cancelled chargeback or reversed refund.
 
 Add create, retrieve, list, and evidence operations.
 
-
 ## 19. Discounts, credits, and dunning
 
 ### 367. Design Coupon
@@ -1970,7 +1967,6 @@ Check the stability of PDF and serialized invoice snapshots.
 ### 480. Create provider sandbox tests
 
 Check real test-mode flows without including them in regular CI.
-
 
 ## 24. Performance and reliability
 
