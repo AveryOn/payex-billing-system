@@ -20,7 +20,10 @@
     "verify": "npm run typecheck && npm run lint && npm run format:check && npm run test",
     "prepare": "husky",
     "source-code:generate": "node scripts/generate-project-source.mjs",
-    "dev:docker:up": "./scripts/docker-up.sh"
+    "dev:docker:up": "./scripts/docker-up.sh",
+    "dev:docker:renew": "./scripts/docker-renew.sh",
+    "dev:docker:reset": "./scripts/docker-reset.sh",
+    "dev:docker:control": "./scripts/docker-control.sh"
   },
   "repository": {
     "type": "git",
@@ -41,10 +44,18 @@
     "express": "^5.2.1"
   },
   "devDependencies": {
+    "@eslint/js": "^10.0.1",
     "@types/express": "^5.0.6",
     "@types/node": "^26.0.0",
+    "@vitest/coverage-v8": "^4.1.9",
+    "eslint": "^10.5.0",
+    "eslint-config-prettier": "^10.1.8",
+    "husky": "^9.1.7",
+    "prettier": "^3.8.4",
     "tsup": "^8.5.1",
     "tsx": "^4.22.4",
-    "typescript": "^6.0.3"
+    "typescript": "^6.0.3",
+    "typescript-eslint": "^8.61.1",
+    "vitest": "^4.1.9"
   }
 }
